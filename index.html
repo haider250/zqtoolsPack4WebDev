@@ -1,0 +1,1722 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>zqtools pack - Multi-Tool Website</title>
+    <meta name="description" content="A collection of useful web tools for developers and everyday use">
+    <style>
+        /* CSS Variables for theming */
+        :root {
+            --bg-primary: #1E1E2F;
+            --bg-secondary: #27293D;
+            --bg-card: #2A2C42;
+            --accent-primary: #4E73DF;
+            --accent-secondary: #6C63FF;
+            --text-primary: #FFFFFF;
+            --text-secondary: #9DA5B1;
+            --success: #1CC88A;
+            --warning: #F6C23E;
+            --danger: #E74A3B;
+            --border-radius: 12px;
+            --transition: all 0.3s ease;
+            --shadow: 0 4px 20px rgba(0, 0, 0, 0.25);
+            --card-padding: 1.5rem;
+        }
+
+        /* Reset and Base Styles */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: var(--bg-primary);
+            color: var(--text-primary);
+            line-height: 1.6;
+            overflow-x: hidden;
+            min-height: 100vh;
+        }
+
+        /* Layout Components */
+        .container {
+            width: 100%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 1.5rem;
+        }
+
+        header {
+            background-color: var(--bg-secondary);
+            padding: 1rem 0;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            box-shadow: var(--shadow);
+        }
+
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: var(--text-primary);
+            display: flex;
+            align-items: center;
+        }
+
+        .logo span {
+            color: var(--accent-primary);
+        }
+
+        /* Search and Filter */
+        .search-container {
+            position: relative;
+            width: 100%;
+            max-width: 500px;
+            margin: 1.5rem auto;
+        }
+
+        .search-box {
+            width: 100%;
+            padding: 0.8rem 1rem 0.8rem 2.8rem;
+            border-radius: 50px;
+            border: 2px solid var(--bg-secondary);
+            background-color: var(--bg-secondary);
+            color: var(--text-primary);
+            font-size: 1rem;
+            transition: var(--transition);
+        }
+
+        .search-box:focus {
+            outline: none;
+            border-color: var(--accent-primary);
+            box-shadow: 0 0 0 3px rgba(78, 115, 223, 0.3);
+        }
+
+        .search-icon {
+            position: absolute;
+            left: 1rem;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--text-secondary);
+        }
+
+        /* Tools Grid */
+        .tools-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 1.5rem;
+            padding: 1.5rem 0;
+        }
+
+        .tool-card {
+            background-color: var(--bg-card);
+            border-radius: var(--border-radius);
+            padding: var(--card-padding);
+            box-shadow: var(--shadow);
+            transition: var(--transition);
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .tool-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+        }
+
+        .tool-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1rem;
+        }
+
+        .tool-title {
+            font-size: 1.2rem;
+            font-weight: 600;
+            color: var(--text-primary);
+        }
+
+        .tool-content {
+            flex-grow: 1;
+        }
+
+        /* Form Elements */
+        .input-group {
+            margin-bottom: 1rem;
+        }
+
+        .input-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            color: var(--text-secondary);
+            font-weight: 500;
+        }
+
+        input, select, textarea, button {
+            width: 100%;
+            padding: 0.8rem 1rem;
+            border-radius: 8px;
+            border: 1px solid var(--bg-secondary);
+            background-color: var(--bg-secondary);
+            color: var(--text-primary);
+            font-size: 1rem;
+            transition: var(--transition);
+        }
+
+        input:focus, select:focus, textarea:focus {
+            outline: none;
+            border-color: var(--accent-primary);
+            box-shadow: 0 0 0 3px rgba(78, 115, 223, 0.3);
+        }
+
+        textarea {
+            min-height: 120px;
+            resize: vertical;
+        }
+
+        button {
+            background-color: var(--accent-primary);
+            color: white;
+            border: none;
+            cursor: pointer;
+            font-weight: 600;
+            padding: 0.8rem 1.5rem;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            transition: var(--transition);
+        }
+
+        button:hover {
+            background-color: var(--accent-secondary);
+            transform: translateY(-2px);
+        }
+
+        button:active {
+            transform: translateY(0);
+        }
+
+        .btn-sm {
+            padding: 0.5rem 1rem;
+            font-size: 0.9rem;
+        }
+
+        .btn-icon {
+            margin-right: 0.5rem;
+        }
+
+        /* Result Areas */
+        .result {
+            margin-top: 1rem;
+            padding: 1rem;
+            background-color: var(--bg-secondary);
+            border-radius: 8px;
+            word-break: break-all;
+            min-height: 50px;
+        }
+
+        /* Tabs */
+        .tabs {
+            display: flex;
+            margin-bottom: 1rem;
+            border-bottom: 1px solid var(--bg-secondary);
+        }
+
+        .tab {
+            padding: 0.5rem 1rem;
+            cursor: pointer;
+            color: var(--text-secondary);
+            transition: var(--transition);
+            border-bottom: 2px solid transparent;
+        }
+
+        .tab.active {
+            color: var(--accent-primary);
+            border-bottom: 2px solid var(--accent-primary);
+        }
+
+        .tab-content {
+            display: none;
+        }
+
+        .tab-content.active {
+            display: block;
+        }
+
+        /* Range Input */
+        input[type="range"] {
+            height: 5px;
+            -webkit-appearance: none;
+            appearance: none;
+            background: var(--bg-secondary);
+            outline: none;
+            border: none;
+            border-radius: 5px;
+        }
+
+        input[type="range"]::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            appearance: none;
+            width: 18px;
+            height: 18px;
+            border-radius: 50%;
+            background: var(--accent-primary);
+            cursor: pointer;
+        }
+
+        /* Checkbox Group */
+        .checkbox-group {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(130px, 1fr));
+            gap: 0.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .checkbox-item {
+            display: flex;
+            align-items: center;
+        }
+
+        .checkbox-item input {
+            width: auto;
+            margin-right: 0.5rem;
+        }
+
+        /* Color Preview */
+        .color-preview {
+            width: 100%;
+            height: 100px;
+            border-radius: 8px;
+            margin-bottom: 1rem;
+        }
+
+        /* Timer Display */
+        .timer-display {
+            font-size: 2.5rem;
+            text-align: center;
+            font-variant-numeric: tabular-nums;
+            margin: 1rem 0;
+            font-weight: 700;
+        }
+
+        /* Command Palette */
+        .command-palette {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.8);
+            display: none;
+            justify-content: center;
+            align-items: flex-start;
+            z-index: 1000;
+            padding-top: 10%;
+        }
+
+        .command-palette.active {
+            display: flex;
+        }
+
+        .command-box {
+            width: 90%;
+            max-width: 600px;
+            background-color: var(--bg-card);
+            border-radius: var(--border-radius);
+            padding: 1.5rem;
+            box-shadow: var(--shadow);
+        }
+
+        .command-input {
+            width: 100%;
+            padding: 1rem;
+            margin-bottom: 1rem;
+            border-radius: 8px;
+            border: 2px solid var(--bg-secondary);
+            background-color: var(--bg-secondary);
+            color: var(--text-primary);
+            font-size: 1.2rem;
+        }
+
+        .command-list {
+            max-height: 300px;
+            overflow-y: auto;
+        }
+
+        .command-item {
+            padding: 0.8rem 1rem;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: var(--transition);
+            display: flex;
+            align-items: center;
+        }
+
+        .command-item:hover {
+            background-color: var(--bg-secondary);
+        }
+
+        .command-item span {
+            margin-left: 0.5rem;
+        }
+
+        /* Utility Classes */
+        .hidden {
+            display: none;
+        }
+
+        .flex {
+            display: flex;
+        }
+
+        .flex-between {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .mt-1 {
+            margin-top: 1rem;
+        }
+
+        .mb-1 {
+            margin-bottom: 1rem;
+        }
+
+        .text-center {
+            text-align: center;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .tools-grid {
+                grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            }
+
+            .header-content {
+                flex-direction: column;
+                gap: 1rem;
+            }
+
+            .timer-display {
+                font-size: 2rem;
+            }
+        }
+
+        @media (max-width: 576px) {
+            .tools-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .checkbox-group {
+                grid-template-columns: 1fr 1fr;
+            }
+        }
+
+        /* Animation */
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        .fade-in {
+            animation: fadeIn 0.3s ease;
+        }
+
+        /* Scrollbar Styling */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: var(--bg-secondary);
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: var(--accent-primary);
+            border-radius: 4px;
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background: var(--accent-secondary);
+        }
+    </style>
+</head>
+<body>
+    <!-- Header Section -->
+    <header>
+        <div class="container header-content">
+            <div class="logo">zq<span>tools</span> pack</div>
+            <div class="search-container">
+                <div class="search-icon">🔍</div>
+                <input type="text" id="searchInput" class="search-box" placeholder="Search for tools...">
+            </div>
+        </div>
+    </header>
+
+    <main class="container">
+        <!-- Tools Grid -->
+        <div class="tools-grid" id="toolsGrid">
+            <!-- Calculator Tool -->
+            <div class="tool-card" data-tool-name="calculator">
+                <div class="tool-header">
+                    <h3 class="tool-title">Calculator</h3>
+                </div>
+                <div class="tool-content">
+                    <div class="input-group">
+                        <input type="text" id="calcDisplay" readonly>
+                    </div>
+                    <div class="calc-buttons">
+                        <div class="flex-between mb-1">
+                            <button class="btn-sm" onclick="calcClear()">C</button>
+                            <button class="btn-sm" onclick="calcBackspace()">⌫</button>
+                            <button class="btn-sm" onclick="calcAppend('%')">%</button>
+                            <button class="btn-sm" onclick="calcAppend('/')">/</button>
+                        </div>
+                        <div class="flex-between mb-1">
+                            <button class="btn-sm" onclick="calcAppend('7')">7</button>
+                            <button class="btn-sm" onclick="calcAppend('8')">8</button>
+                            <button class="btn-sm" onclick="calcAppend('9')">9</button>
+                            <button class="btn-sm" onclick="calcAppend('*')">×</button>
+                        </div>
+                        <div class="flex-between mb-1">
+                            <button class="btn-sm" onclick="calcAppend('4')">4</button>
+                            <button class="btn-sm" onclick="calcAppend('5')">5</button>
+                            <button class="btn-sm" onclick="calcAppend('6')">6</button>
+                            <button class="btn-sm" onclick="calcAppend('-')">-</button>
+                        </div>
+                        <div class="flex-between mb-1">
+                            <button class="btn-sm" onclick="calcAppend('1')">1</button>
+                            <button class="btn-sm" onclick="calcAppend('2')">2</button>
+                            <button class="btn-sm" onclick="calcAppend('3')">3</button>
+                            <button class="btn-sm" onclick="calcAppend('+')">+</button>
+                        </div>
+                        <div class="flex-between">
+                            <button class="btn-sm" onclick="calcAppend('0')">0</button>
+                            <button class="btn-sm" onclick="calcAppend('.')">.</button>
+                            <button class="btn-sm" onclick="calculate()" style="flex-grow: 2; margin-left: 0.5rem;">=</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Unit Converter Tool -->
+            <div class="tool-card" data-tool-name="unit converter">
+                <div class="tool-header">
+                    <h3 class="tool-title">Unit Converter</h3>
+                </div>
+                <div class="tool-content">
+                    <div class="input-group">
+                        <label for="converterValue">Value</label>
+                        <input type="number" id="converterValue" placeholder="Enter value">
+                    </div>
+                    <div class="input-group">
+                        <label for="converterFrom">From</label>
+                        <select id="converterFrom">
+                            <option value="meter">Meter</option>
+                            <option value="kilometer">Kilometer</option>
+                            <option value="centimeter">Centimeter</option>
+                            <option value="millimeter">Millimeter</option>
+                            <option value="mile">Mile</option>
+                            <option value="yard">Yard</option>
+                            <option value="foot">Foot</option>
+                            <option value="inch">Inch</option>
+                            <option value="celsius">Celsius</option>
+                            <option value="fahrenheit">Fahrenheit</option>
+                            <option value="kelvin">Kelvin</option>
+                            <option value="kilogram">Kilogram</option>
+                            <option value="gram">Gram</option>
+                            <option value="milligram">Milligram</option>
+                            <option value="pound">Pound</option>
+                            <option value="ounce">Ounce</option>
+                        </select>
+                    </div>
+                    <div class="input-group">
+                        <label for="converterTo">To</label>
+                        <select id="converterTo">
+                            <option value="meter">Meter</option>
+                            <option value="kilometer">Kilometer</option>
+                            <option value="centimeter">Centimeter</option>
+                            <option value="millimeter">Millimeter</option>
+                            <option value="mile">Mile</option>
+                            <option value="yard">Yard</option>
+                            <option value="foot">Foot</option>
+                            <option value="inch">Inch</option>
+                            <option value="celsius">Celsius</option>
+                            <option value="fahrenheit">Fahrenheit</option>
+                            <option value="kelvin">Kelvin</option>
+                            <option value="kilogram">Kilogram</option>
+                            <option value="gram">Gram</option>
+                            <option value="milligram">Milligram</option>
+                            <option value="pound">Pound</option>
+                            <option value="ounce">Ounce</option>
+                        </select>
+                    </div>
+                    <button onclick="convertUnits()">Convert</button>
+                    <div class="result" id="converterResult">Result will appear here</div>
+                </div>
+            </div>
+
+            <!-- Text Utilities Tool -->
+            <div class="tool-card" data-tool-name="text utilities">
+                <div class="tool-header">
+                    <h3 class="tool-title">Text Utilities</h3>
+                </div>
+                <div class="tool-content">
+                    <div class="input-group">
+                        <textarea id="textInput" placeholder="Enter your text here"></textarea>
+                    </div>
+                    <div class="flex-between">
+                        <button onclick="textToUpper()" class="btn-sm">UPPERCASE</button>
+                        <button onclick="textToLower()" class="btn-sm">lowercase</button>
+                        <button onclick="textCapitalize()" class="btn-sm">Capitalize</button>
+                    </div>
+                    <div class="flex-between mt-1">
+                        <button onclick="textRemoveSpaces()" class="btn-sm">Remove Spaces</button>
+                        <button onclick="textCopy()" class="btn-sm">Copy Text</button>
+                        <button onclick="textClear()" class="btn-sm">Clear</button>
+                    </div>
+                    <div class="input-group mt-1">
+                        <div class="flex-between">
+                            <span>Word Count: <span id="wordCount">0</span></span>
+                            <span>Character Count: <span id="charCount">0</span></span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Base64 Tool -->
+            <div class="tool-card" data-tool-name="base64 encode decode">
+                <div class="tool-header">
+                    <h3 class="tool-title">Base64 Encode/Decode</h3>
+                </div>
+                <div class="tool-content">
+                    <div class="tabs">
+                        <div class="tab active" data-tab="encode">Encode</div>
+                        <div class="tab" data-tab="decode">Decode</div>
+                    </div>
+                    <div class="tab-content active" id="encodeTab">
+                        <div class="input-group">
+                            <textarea id="base64EncodeInput" placeholder="Text to encode"></textarea>
+                        </div>
+                        <button onclick="base64Encode()">Encode</button>
+                        <div class="result" id="base64EncodeResult"></div>
+                    </div>
+                    <div class="tab-content" id="decodeTab">
+                        <div class="input-group">
+                            <textarea id="base64DecodeInput" placeholder="Base64 to decode"></textarea>
+                        </div>
+                        <button onclick="base64Decode()">Decode</button>
+                        <div class="result" id="base64DecodeResult"></div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- URL Encoder/Decoder Tool -->
+            <div class="tool-card" data-tool-name="url encode decode">
+                <div class="tool-header">
+                    <h3 class="tool-title">URL Encoder/Decoder</h3>
+                </div>
+                <div class="tool-content">
+                    <div class="tabs">
+                        <div class="tab active" data-tab="urlencode">Encode</div>
+                        <div class="tab" data-tab="urldecode">Decode</div>
+                    </div>
+                    <div class="tab-content active" id="urlEncodeTab">
+                        <div class="input-group">
+                            <textarea id="urlEncodeInput" placeholder="URL to encode"></textarea>
+                        </div>
+                        <button onclick="urlEncode()">Encode</button>
+                        <div class="result" id="urlEncodeResult"></div>
+                    </div>
+                    <div class="tab-content" id="urlDecodeTab">
+                        <div class="input-group">
+                            <textarea id="urlDecodeInput" placeholder="URL to decode"></textarea>
+                        </div>
+                        <button onclick="urlDecode()">Decode</button>
+                        <div class="result" id="urlDecodeResult"></div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- JSON Formatter Tool -->
+            <div class="tool-card" data-tool-name="json formatter validator">
+                <div class="tool-header">
+                    <h3 class="tool-title">JSON Formatter</h3>
+                </div>
+                <div class="tool-content">
+                    <div class="input-group">
+                        <textarea id="jsonInput" placeholder='Paste JSON here e.g. {"name": "John", "age": 30}'></textarea>
+                    </div>
+                    <button onclick="formatJson()">Format & Validate</button>
+                    <div class="result" id="jsonResult"></div>
+                </div>
+            </div>
+
+            <!-- Password Generator Tool -->
+            <div class="tool-card" data-tool-name="password generator">
+                <div class="tool-header">
+                    <h3 class="tool-title">Password Generator</h3>
+                </div>
+                <div class="tool-content">
+                    <div class="input-group">
+                        <label for="passwordLength">Length: <span id="lengthValue">12</span></label>
+                        <input type="range" id="passwordLength" min="6" max="30" value="12">
+                    </div>
+                    <div class="checkbox-group">
+                        <div class="checkbox-item">
+                            <input type="checkbox" id="uppercaseCheck" checked>
+                            <label for="uppercaseCheck">A-Z</label>
+                        </div>
+                        <div class="checkbox-item">
+                            <input type="checkbox" id="lowercaseCheck" checked>
+                            <label for="lowercaseCheck">a-z</label>
+                        </div>
+                        <div class="checkbox-item">
+                            <input type="checkbox" id="numbersCheck" checked>
+                            <label for="numbersCheck">0-9</label>
+                        </div>
+                        <div class="checkbox-item">
+                            <input type="checkbox" id="symbolsCheck" checked>
+                            <label for="symbolsCheck">!@#$%</label>
+                        </div>
+                    </div>
+                    <button onclick="generatePassword()">Generate Password</button>
+                    <div class="result" id="passwordResult"></div>
+                    <button onclick="copyPassword()" class="btn-sm mt-1">Copy Password</button>
+                </div>
+            </div>
+
+            <!-- UUID Generator Tool -->
+            <div class="tool-card" data-tool-name="uuid generator">
+                <div class="tool-header">
+                    <h3 class="tool-title">UUID Generator</h3>
+                </div>
+                <div class="tool-content">
+                    <button onclick="generateUUID()">Generate UUID v4</button>
+                    <div class="result" id="uuidResult"></div>
+                    <button onclick="copyUUID()" class="btn-sm mt-1">Copy UUID</button>
+                </div>
+            </div>
+
+            <!-- Hash Generator Tool -->
+            <div class="tool-card" data-tool-name="hash generator">
+                <div class="tool-header">
+                    <h3 class="tool-title">Hash Generator</h3>
+                </div>
+                <div class="tool-content">
+                    <div class="input-group">
+                        <textarea id="hashInput" placeholder="Text to hash"></textarea>
+                    </div>
+                    <button onclick="generateHash()">Generate SHA-256 Hash</button>
+                    <div class="result" id="hashResult"></div>
+                </div>
+            </div>
+
+            <!-- Image Tool -->
+            <div class="tool-card" data-tool-name="image resizer compressor">
+                <div class="tool-header">
+                    <h3 class="tool-title">Image Resizer</h3>
+                </div>
+                <div class="tool-content">
+                    <div class="input-group">
+                        <input type="file" id="imageUpload" accept="image/*">
+                    </div>
+                    <div class="input-group">
+                        <label for="imageWidth">Width (px)</label>
+                        <input type="number" id="imageWidth" placeholder="Width">
+                    </div>
+                    <div class="input-group">
+                        <label for="imageHeight">Height (px)</label>
+                        <input type="number" id="imageHeight" placeholder="Height">
+                    </div>
+                    <div class="input-group">
+                        <label for="imageQuality">Quality: <span id="qualityValue">80</span>%</label>
+                        <input type="range" id="imageQuality" min="10" max="100" value="80">
+                    </div>
+                    <button onclick="processImage()" id="processButton" disabled>Process Image</button>
+                    <div class="result text-center" id="imageResult">
+                        <canvas id="imageCanvas" class="hidden"></canvas>
+                        <a id="downloadLink" class="hidden">Download Image</a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Color Picker Tool -->
+            <div class="tool-card" data-tool-name="color picker contrast checker">
+                <div class="tool-header">
+                    <h3 class="tool-title">Color Picker</h3>
+                </div>
+                <div class="tool-content">
+                    <div class="input-group">
+                        <label for="colorPicker">Select Color</label>
+                        <input type="color" id="colorPicker" value="#4e73df">
+                    </div>
+                    <div class="color-preview" id="colorPreview"></div>
+                    <div class="input-group">
+                        <label for="colorHex">HEX</label>
+                        <input type="text" id="colorHex" value="#4e73df" readonly>
+                    </div>
+                    <div class="input-group">
+                        <label for="colorRgb">RGB</label>
+                        <input type="text" id="colorRgb" value="rgb(78, 115, 223)" readonly>
+                    </div>
+                    <div class="input-group">
+                        <label for="contrastColor">Contrast Color</label>
+                        <input type="color" id="contrastColor" value="#ffffff">
+                    </div>
+                    <button onclick="checkContrast()">Check Contrast</button>
+                    <div class="result" id="contrastResult"></div>
+                </div>
+            </div>
+
+            <!-- Stopwatch & Timer Tool -->
+            <div class="tool-card" data-tool-name="stopwatch countdown timer">
+                <div class="tool-header">
+                    <h3 class="tool-title">Stopwatch & Timer</h3>
+                </div>
+                <div class="tool-content">
+                    <div class="tabs">
+                        <div class="tab active" data-tab="stopwatch">Stopwatch</div>
+                        <div class="tab" data-tab="timer">Timer</div>
+                    </div>
+                    <div class="tab-content active" id="stopwatchTab">
+                        <div class="timer-display" id="stopwatchDisplay">00:00:00</div>
+                        <div class="flex-between">
+                            <button onclick="startStopwatch()" id="stopwatchStart" class="btn-sm">Start</button>
+                            <button onclick="pauseStopwatch()" id="stopwatchPause" class="btn-sm" disabled>Pause</button>
+                            <button onclick="resetStopwatch()" id="stopwatchReset" class="btn-sm">Reset</button>
+                        </div>
+                    </div>
+                    <div class="tab-content" id="timerTab">
+                        <div class="input-group">
+                            <label for="timerMinutes">Minutes</label>
+                            <input type="number" id="timerMinutes" min="0" max="60" value="5">
+                        </div>
+                        <div class="input-group">
+                            <label for="timerSeconds">Seconds</label>
+                            <input type="number" id="timerSeconds" min="0" max="59" value="0">
+                        </div>
+                        <div class="timer-display" id="timerDisplay">05:00</div>
+                        <div class="flex-between">
+                            <button onclick="startTimer()" id="timerStart" class="btn-sm">Start</button>
+                            <button onclick="pauseTimer()" id="timerPause" class="btn-sm" disabled>Pause</button>
+                            <button onclick="resetTimer()" id="timerReset" class="btn-sm">Reset</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Quick Notes Tool -->
+            <div class="tool-card" data-tool-name="quick notes">
+                <div class="tool-header">
+                    <h3 class="tool-title">Quick Notes</h3>
+                </div>
+                <div class="tool-content">
+                    <div class="input-group">
+                        <textarea id="notesInput" placeholder="Type your notes here..."></textarea>
+                    </div>
+                    <div class="flex-between">
+                        <button onclick="saveNotes()" class="btn-sm">Save Notes</button>
+                        <button onclick="clearNotes()" class="btn-sm">Clear Notes</button>
+                    </div>
+                    <div class="input-group mt-1">
+                        <div class="flex-between">
+                            <span>Auto-saving in <span id="saveStatus">real-time</span></span>
+                            <span>Chars: <span id="notesCharCount">0</span></span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Command Palette -->
+    <div class="command-palette" id="commandPalette">
+        <div class="command-box">
+            <input type="text" class="command-input" id="commandInput" placeholder="Type a tool name or command...">
+            <div class="command-list" id="commandList">
+                <!-- Command items will be generated here -->
+            </div>
+        </div>
+    </div>
+
+    <!-- Google Ads Placeholder -->
+    <div class="container mt-1 mb-1 text-center">
+        <div style="background-color: #2A2C42; padding: 20px; border-radius: var(--border-radius);">
+            <p>Advertisement Space</p>
+            <p style="font-size: 0.8rem; color: var(--text-secondary);">Google AdSense ready</p>
+        </div>
+    </div>
+
+    <script>
+        // DOM Elements
+        const searchInput = document.getElementById('searchInput');
+        const toolsGrid = document.getElementById('toolsGrid');
+        const toolCards = document.querySelectorAll('.tool-card');
+        const tabs = document.querySelectorAll('.tab');
+        const commandPalette = document.getElementById('commandPalette');
+        const commandInput = document.getElementById('commandInput');
+        const commandList = document.getElementById('commandList');
+        
+        // Tool data for command palette
+        const tools = [
+            { name: 'Calculator', keywords: ['calc', 'calculator', 'math'] },
+            { name: 'Unit Converter', keywords: ['convert', 'converter', 'unit'] },
+            { name: 'Text Utilities', keywords: ['text', 'uppercase', 'lowercase', 'case'] },
+            { name: 'Base64 Encode/Decode', keywords: ['base64', 'encode', 'decode'] },
+            { name: 'URL Encoder/Decoder', keywords: ['url', 'encode', 'decode'] },
+            { name: 'JSON Formatter', keywords: ['json', 'format', 'validator'] },
+            { name: 'Password Generator', keywords: ['password', 'generate', 'security'] },
+            { name: 'UUID Generator', keywords: ['uuid', 'generate', 'unique'] },
+            { name: 'Hash Generator', keywords: ['hash', 'sha256', 'crypto'] },
+            { name: 'Image Resizer', keywords: ['image', 'resize', 'compress'] },
+            { name: 'Color Picker', keywords: ['color', 'picker', 'contrast'] },
+            { name: 'Stopwatch & Timer', keywords: ['stopwatch', 'timer', 'countdown'] },
+            { name: 'Quick Notes', keywords: ['notes', 'quick', 'save'] }
+        ];
+
+        // Initialize the application
+        function init() {
+            // Set up search functionality
+            searchInput.addEventListener('input', filterTools);
+            
+            // Set up tab functionality
+            tabs.forEach(tab => {
+                tab.addEventListener('click', () => {
+                    const tabName = tab.getAttribute('data-tab');
+                    const tabContent = document.getElementById(`${tabName}Tab`);
+                    
+                    // Deactivate all tabs
+                    tabs.forEach(t => t.classList.remove('active'));
+                    document.querySelectorAll('.tab-content').forEach(tc => tc.classList.remove('active'));
+                    
+                    // Activate current tab
+                    tab.classList.add('active');
+                    tabContent.classList.add('active');
+                });
+            });
+            
+            // Set up command palette
+            document.addEventListener('keydown', (e) => {
+                if ((e.ctrlKey || e.metaKey) && e.key === 'k') {
+                    e.preventDefault();
+                    openCommandPalette();
+                }
+                
+                if (e.key === 'Escape') {
+                    closeCommandPalette();
+                }
+            });
+            
+            commandInput.addEventListener('input', filterCommands);
+            
+            // Initialize tool-specific functionality
+            initTextUtilities();
+            initImageTool();
+            initColorPicker();
+            initNotes();
+            
+            // Close command palette when clicking outside
+            commandPalette.addEventListener('click', (e) => {
+                if (e.target === commandPalette) {
+                    closeCommandPalette();
+                }
+            });
+        }
+
+        // Search and filter tools
+        function filterTools() {
+            const searchTerm = searchInput.value.toLowerCase();
+            
+            toolCards.forEach(card => {
+                const toolName = card.getAttribute('data-tool-name').toLowerCase();
+                
+                if (toolName.includes(searchTerm)) {
+                    card.style.display = 'block';
+                } else {
+                    card.style.display = 'none';
+                }
+            });
+        }
+
+        // Command palette functionality
+        function openCommandPalette() {
+            commandPalette.classList.add('active');
+            commandInput.value = '';
+            commandInput.focus();
+            populateCommandList();
+        }
+
+        function closeCommandPalette() {
+            commandPalette.classList.remove('active');
+        }
+
+        function populateCommandList() {
+            commandList.innerHTML = '';
+            
+            tools.forEach(tool => {
+                const item = document.createElement('div');
+                item.className = 'command-item';
+                item.innerHTML = `🔧 <span>${tool.name}</span>`;
+                item.addEventListener('click', () => {
+                    navigateToTool(tool.name);
+                    closeCommandPalette();
+                });
+                
+                commandList.appendChild(item);
+            });
+        }
+
+        function filterCommands() {
+            const term = commandInput.value.toLowerCase();
+            const items = commandList.querySelectorAll('.command-item');
+            
+            items.forEach(item => {
+                const toolName = item.querySelector('span').textContent.toLowerCase();
+                
+                if (toolName.includes(term)) {
+                    item.style.display = 'flex';
+                } else {
+                    item.style.display = 'none';
+                }
+            });
+        }
+
+        function navigateToTool(toolName) {
+            // Scroll to the tool
+            const normalizedName = toolName.toLowerCase().replace(/\s+/g, '-');
+            const toolElement = document.querySelector(`[data-tool-name="${toolName.toLowerCase()}"]`);
+            
+            if (toolElement) {
+                toolElement.scrollIntoView({ behavior: 'smooth' });
+                
+                // Highlight the tool briefly
+                toolElement.style.boxShadow = '0 0 0 2px var(--accent-primary)';
+                setTimeout(() => {
+                    toolElement.style.boxShadow = '';
+                }, 2000);
+            }
+            
+            // Update search input
+            searchInput.value = toolName;
+            filterTools();
+        }
+
+        // Calculator Functions
+        let calcExpression = '';
+        
+        function calcAppend(value) {
+            calcExpression += value;
+            updateCalcDisplay();
+        }
+        
+        function calcClear() {
+            calcExpression = '';
+            updateCalcDisplay();
+        }
+        
+        function calcBackspace() {
+            calcExpression = calcExpression.slice(0, -1);
+            updateCalcDisplay();
+        }
+        
+        function calculate() {
+            try {
+                // Replace × with * for evaluation
+                const expression = calcExpression.replace(/×/g, '*');
+                calcExpression = eval(expression).toString();
+                updateCalcDisplay();
+            } catch (error) {
+                calcExpression = 'Error';
+                updateCalcDisplay();
+                setTimeout(() => {
+                    calcExpression = '';
+                    updateCalcDisplay();
+                }, 1500);
+            }
+        }
+        
+        function updateCalcDisplay() {
+            document.getElementById('calcDisplay').value = calcExpression;
+        }
+
+        // Unit Converter Functions
+        function convertUnits() {
+            const value = parseFloat(document.getElementById('converterValue').value);
+            const fromUnit = document.getElementById('converterFrom').value;
+            const toUnit = document.getElementById('converterTo').value;
+            
+            if (isNaN(value)) {
+                document.getElementById('converterResult').textContent = 'Please enter a valid number';
+                return;
+            }
+            
+            // Convert to base unit (meters for length, celsius for temperature, kilograms for weight)
+            let baseValue;
+            
+            // Length conversions
+            if (['meter', 'kilometer', 'centimeter', 'millimeter', 'mile', 'yard', 'foot', 'inch'].includes(fromUnit)) {
+                baseValue = convertToMeters(value, fromUnit);
+                const result = convertFromMeters(baseValue, toUnit);
+                document.getElementById('converterResult').textContent = `${value} ${fromUnit} = ${result.toFixed(6)} ${toUnit}`;
+            }
+            // Temperature conversions
+            else if (['celsius', 'fahrenheit', 'kelvin'].includes(fromUnit)) {
+                baseValue = convertToCelsius(value, fromUnit);
+                const result = convertFromCelsius(baseValue, toUnit);
+                document.getElementById('converterResult').textContent = `${value} ${fromUnit} = ${result.toFixed(2)} ${toUnit}`;
+            }
+            // Weight conversions
+            else if (['kilogram', 'gram', 'milligram', 'pound', 'ounce'].includes(fromUnit)) {
+                baseValue = convertToKilograms(value, fromUnit);
+                const result = convertFromKilograms(baseValue, toUnit);
+                document.getElementById('converterResult').textContent = `${value} ${fromUnit} = ${result.toFixed(6)} ${toUnit}`;
+            }
+        }
+        
+        function convertToMeters(value, unit) {
+            const conversionFactors = {
+                meter: 1,
+                kilometer: 1000,
+                centimeter: 0.01,
+                millimeter: 0.001,
+                mile: 1609.34,
+                yard: 0.9144,
+                foot: 0.3048,
+                inch: 0.0254
+            };
+            
+            return value * conversionFactors[unit];
+        }
+        
+        function convertFromMeters(value, unit) {
+            const conversionFactors = {
+                meter: 1,
+                kilometer: 0.001,
+                centimeter: 100,
+                millimeter: 1000,
+                mile: 0.000621371,
+                yard: 1.09361,
+                foot: 3.28084,
+                inch: 39.3701
+            };
+            
+            return value * conversionFactors[unit];
+        }
+        
+        function convertToCelsius(value, unit) {
+            if (unit === 'celsius') return value;
+            if (unit === 'fahrenheit') return (value - 32) * 5/9;
+            if (unit === 'kelvin') return value - 273.15;
+        }
+        
+        function convertFromCelsius(value, unit) {
+            if (unit === 'celsius') return value;
+            if (unit === 'fahrenheit') return (value * 9/5) + 32;
+            if (unit === 'kelvin') return value + 273.15;
+        }
+        
+        function convertToKilograms(value, unit) {
+            const conversionFactors = {
+                kilogram: 1,
+                gram: 0.001,
+                milligram: 0.000001,
+                pound: 0.453592,
+                ounce: 0.0283495
+            };
+            
+            return value * conversionFactors[unit];
+        }
+        
+        function convertFromKilograms(value, unit) {
+            const conversionFactors = {
+                kilogram: 1,
+                gram: 1000,
+                milligram: 1000000,
+                pound: 2.20462,
+                ounce: 35.274
+            };
+            
+            return value * conversionFactors[unit];
+        }
+
+        // Text Utilities Functions
+        function initTextUtilities() {
+            const textInput = document.getElementById('textInput');
+            
+            textInput.addEventListener('input', () => {
+                const text = textInput.value;
+                document.getElementById('wordCount').textContent = countWords(text);
+                document.getElementById('charCount').textContent = text.length;
+            });
+        }
+        
+        function countWords(text) {
+            return text.trim() === '' ? 0 : text.trim().split(/\s+/).length;
+        }
+        
+        function textToUpper() {
+            const textInput = document.getElementById('textInput');
+            textInput.value = textInput.value.toUpperCase();
+            updateTextCounts();
+        }
+        
+        function textToLower() {
+            const textInput = document.getElementById('textInput');
+            textInput.value = textInput.value.toLowerCase();
+            updateTextCounts();
+        }
+        
+        function textCapitalize() {
+            const textInput = document.getElementById('textInput');
+            textInput.value = textInput.value.replace(/\b\w/g, c => c.toUpperCase());
+            updateTextCounts();
+        }
+        
+        function textRemoveSpaces() {
+            const textInput = document.getElementById('textInput');
+            textInput.value = textInput.value.replace(/\s+/g, '');
+            updateTextCounts();
+        }
+        
+        function textCopy() {
+            const textInput = document.getElementById('textInput');
+            textInput.select();
+            document.execCommand('copy');
+            
+            // Show feedback
+            const originalText = textInput.value;
+            textInput.value = 'Copied to clipboard!';
+            setTimeout(() => {
+                textInput.value = originalText;
+            }, 1500);
+        }
+        
+        function textClear() {
+            document.getElementById('textInput').value = '';
+            updateTextCounts();
+        }
+        
+        function updateTextCounts() {
+            const text = document.getElementById('textInput').value;
+            document.getElementById('wordCount').textContent = countWords(text);
+            document.getElementById('charCount').textContent = text.length;
+        }
+
+        // Base64 Functions
+        function base64Encode() {
+            const input = document.getElementById('base64EncodeInput').value;
+            const encoded = btoa(unescape(encodeURIComponent(input)));
+            document.getElementById('base64EncodeResult').textContent = encoded;
+        }
+        
+        function base64Decode() {
+            const input = document.getElementById('base64DecodeInput').value;
+            try {
+                const decoded = decodeURIComponent(escape(atob(input)));
+                document.getElementById('base64DecodeResult').textContent = decoded;
+            } catch (error) {
+                document.getElementById('base64DecodeResult').textContent = 'Invalid Base64 string';
+            }
+        }
+
+        // URL Encode/Decode Functions
+        function urlEncode() {
+            const input = document.getElementById('urlEncodeInput').value;
+            const encoded = encodeURIComponent(input);
+            document.getElementById('urlEncodeResult').textContent = encoded;
+        }
+        
+        function urlDecode() {
+            const input = document.getElementById('urlDecodeInput').value;
+            try {
+                const decoded = decodeURIComponent(input);
+                document.getElementById('urlDecodeResult').textContent = decoded;
+            } catch (error) {
+                document.getElementById('urlDecodeResult').textContent = 'Invalid encoded URL';
+            }
+        }
+
+        // JSON Formatter Functions
+        function formatJson() {
+            const input = document.getElementById('jsonInput').value;
+            
+            try {
+                const parsed = JSON.parse(input);
+                const formatted = JSON.stringify(parsed, null, 2);
+                document.getElementById('jsonResult').textContent = formatted;
+                document.getElementById('jsonResult').style.color = 'var(--text-primary)';
+            } catch (error) {
+                document.getElementById('jsonResult').textContent = 'Invalid JSON: ' + error.message;
+                document.getElementById('jsonResult').style.color = 'var(--danger)';
+            }
+        }
+
+        // Password Generator Functions
+        function generatePassword() {
+            const length = document.getElementById('passwordLength').value;
+            const useUpper = document.getElementById('uppercaseCheck').checked;
+            const useLower = document.getElementById('lowercaseCheck').checked;
+            const useNumbers = document.getElementById('numbersCheck').checked;
+            const useSymbols = document.getElementById('symbolsCheck').checked;
+            
+            const uppercase = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
+            const lowercase = 'abcdefghijklmnopqrstuvwxyz';
+            const numbers = '0123456789';
+            const symbols = '!@#$%^&*()_+-=[]{}|;:,.<>?';
+            
+            let characters = '';
+            if (useUpper) characters += uppercase;
+            if (useLower) characters += lowercase;
+            if (useNumbers) characters += numbers;
+            if (useSymbols) characters += symbols;
+            
+            if (characters === '') {
+                document.getElementById('passwordResult').textContent = 'Please select at least one character type';
+                return;
+            }
+            
+            let password = '';
+            for (let i = 0; i < length; i++) {
+                password += characters.charAt(Math.floor(Math.random() * characters.length));
+            }
+            
+            document.getElementById('passwordResult').textContent = password;
+        }
+        
+        function copyPassword() {
+            const password = document.getElementById('passwordResult').textContent;
+            if (password && password !== 'Password will appear here') {
+                navigator.clipboard.writeText(password).then(() => {
+                    const originalText = document.getElementById('passwordResult').textContent;
+                    document.getElementById('passwordResult').textContent = 'Copied to clipboard!';
+                    setTimeout(() => {
+                        document.getElementById('passwordResult').textContent = originalText;
+                    }, 1500);
+                });
+            }
+        }
+        
+        // Update password length value display
+        document.getElementById('passwordLength').addEventListener('input', function() {
+            document.getElementById('lengthValue').textContent = this.value;
+        });
+
+        // UUID Generator Functions
+        function generateUUID() {
+            // Generate a UUID v4 (random)
+            const uuid = 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function(c) {
+                const r = Math.random() * 16 | 0;
+                const v = c === 'x' ? r : (r & 0x3 | 0x8);
+                return v.toString(16);
+            });
+            
+            document.getElementById('uuidResult').textContent = uuid;
+        }
+        
+        function copyUUID() {
+            const uuid = document.getElementById('uuidResult').textContent;
+            if (uuid) {
+                navigator.clipboard.writeText(uuid).then(() => {
+                    const originalText = document.getElementById('uuidResult').textContent;
+                    document.getElementById('uuidResult').textContent = 'Copied to clipboard!';
+                    setTimeout(() => {
+                        document.getElementById('uuidResult').textContent = originalText;
+                    }, 1500);
+                });
+            }
+        }
+
+        // Hash Generator Functions
+        async function generateHash() {
+            const input = document.getElementById('hashInput').value;
+            
+            if (!input) {
+                document.getElementById('hashResult').textContent = 'Please enter text to hash';
+                return;
+            }
+            
+            // Encode the input as UTF-8
+            const encoder = new TextEncoder();
+            const data = encoder.encode(input);
+            
+            // Generate the hash using Web Crypto API
+            const hashBuffer = await crypto.subtle.digest('SHA-256', data);
+            
+            // Convert the hash to a hexadecimal string
+            const hashArray = Array.from(new Uint8Array(hashBuffer));
+            const hashHex = hashArray.map(b => b.toString(16).padStart(2, '0')).join('');
+            
+            document.getElementById('hashResult').textContent = hashHex;
+        }
+
+        // Image Tool Functions
+        function initImageTool() {
+            const imageUpload = document.getElementById('imageUpload');
+            const imageWidth = document.getElementById('imageWidth');
+            const imageHeight = document.getElementById('imageHeight');
+            const processButton = document.getElementById('processButton');
+            
+            imageUpload.addEventListener('change', function(e) {
+                if (this.files && this.files[0]) {
+                    const reader = new FileReader();
+                    
+                    reader.onload = function(e) {
+                        const img = new Image();
+                        img.onload = function() {
+                            // Set default dimensions to original image dimensions
+                            imageWidth.value = this.width;
+                            imageHeight.value = this.height;
+                            processButton.disabled = false;
+                        };
+                        img.src = e.target.result;
+                    };
+                    
+                    reader.readAsDataURL(this.files[0]);
+                }
+            });
+            
+            // Update quality value display
+            document.getElementById('imageQuality').addEventListener('input', function() {
+                document.getElementById('qualityValue').textContent = this.value;
+            });
+        }
+        
+        function processImage() {
+            const file = document.getElementById('imageUpload').files[0];
+            const width = parseInt(document.getElementById('imageWidth').value);
+            const height = parseInt(document.getElementById('imageHeight').value);
+            const quality = parseInt(document.getElementById('imageQuality').value) / 100;
+            
+            if (!file) {
+                alert('Please select an image first');
+                return;
+            }
+            
+            const reader = new FileReader();
+            
+            reader.onload = function(e) {
+                const img = new Image();
+                img.onload = function() {
+                    const canvas = document.getElementById('imageCanvas');
+                    const ctx = canvas.getContext('2d');
+                    
+                    // Set canvas dimensions
+                    canvas.width = width;
+                    canvas.height = height;
+                    
+                    // Draw image on canvas
+                    ctx.drawImage(img, 0, 0, width, height);
+                    
+                    // Get the data URL
+                    const dataURL = canvas.toDataURL('image/jpeg', quality);
+                    
+                    // Create download link
+                    const downloadLink = document.getElementById('downloadLink');
+                    downloadLink.href = dataURL;
+                    downloadLink.download = 'resized-image.jpg';
+                    downloadLink.textContent = 'Download Resized Image';
+                    downloadLink.classList.remove('hidden');
+                    
+                    // Calculate size reduction
+                    const originalSize = file.size;
+                    const newSize = Math.round((dataURL.length * 3) / 4); // Approximate base64 size
+                    const reduction = Math.round((1 - newSize / originalSize) * 100);
+                    
+                    document.getElementById('imageResult').innerHTML = `
+                        <p>Original: ${formatBytes(originalSize)}</p>
+                        <p>New: ${formatBytes(newSize)} (${reduction > 0 ? reduction + '% smaller' : 'larger due to format change'})</p>
+                        <a href="${dataURL}" download="resized-image.jpg" style="display: block; margin-top: 10px;">Download Resized Image</a>
+                    `;
+                };
+                img.src = e.target.result;
+            };
+            
+            reader.readAsDataURL(file);
+        }
+        
+        function formatBytes(bytes, decimals = 2) {
+            if (bytes === 0) return '0 Bytes';
+            
+            const k = 1024;
+            const dm = decimals < 0 ? 0 : decimals;
+            const sizes = ['Bytes', 'KB', 'MB', 'GB'];
+            
+            const i = Math.floor(Math.log(bytes) / Math.log(k));
+            
+            return parseFloat((bytes / Math.pow(k, i)).toFixed(dm)) + ' ' + sizes[i];
+        }
+
+        // Color Picker Functions
+        function initColorPicker() {
+            const colorPicker = document.getElementById('colorPicker');
+            const colorPreview = document.getElementById('colorPreview');
+            
+            colorPicker.addEventListener('input', function() {
+                updateColorValues(this.value);
+            });
+            
+            // Initialize with default color
+            updateColorValues(colorPicker.value);
+        }
+        
+        function updateColorValues(hex) {
+            document.getElementById('colorPreview').style.backgroundColor = hex;
+            document.getElementById('colorHex').value = hex;
+            
+            // Convert hex to RGB
+            const r = parseInt(hex.slice(1, 3), 16);
+            const g = parseInt(hex.slice(3, 5), 16);
+            const b = parseInt(hex.slice(5, 7), 16);
+            
+            document.getElementById('colorRgb').value = `rgb(${r}, ${g}, ${b})`;
+        }
+        
+        function checkContrast() {
+            const bgColor = document.getElementById('colorPicker').value;
+            const textColor = document.getElementById('contrastColor').value;
+            
+            // Convert hex to RGB
+            const bgRgb = hexToRgb(bgColor);
+            const textRgb = hexToRgb(textColor);
+            
+            // Calculate relative luminance
+            const bgLuminance = calculateLuminance(bgRgb.r, bgRgb.g, bgRgb.b);
+            const textLuminance = calculateLuminance(textRgb.r, textRgb.g, textRgb.b);
+            
+            // Calculate contrast ratio
+            const lighter = Math.max(bgLuminance, textLuminance);
+            const darker = Math.min(bgLuminance, textLuminance);
+            const contrastRatio = (lighter + 0.05) / (darker + 0.05);
+            
+            // Determine if it meets accessibility standards
+            let rating = '';
+            if (contrastRatio >= 7) {
+                rating = 'AAA (Excellent)';
+            } else if (contrastRatio >= 4.5) {
+                rating = 'AA (Good)';
+            } else if (contrastRatio >= 3) {
+                rating = 'AA Large (Acceptable for large text)';
+            } else {
+                rating = 'Poor (Does not meet accessibility standards)';
+            }
+            
+            document.getElementById('contrastResult').innerHTML = `
+                <p>Contrast Ratio: ${contrastRatio.toFixed(2)}:1</p>
+                <p>Rating: ${rating}</p>
+            `;
+        }
+        
+        function hexToRgb(hex) {
+            const result = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hex);
+            return result ? {
+                r: parseInt(result[1], 16),
+                g: parseInt(result[2], 16),
+                b: parseInt(result[3], 16)
+            } : { r: 0, g: 0, b: 0 };
+        }
+        
+        function calculateLuminance(r, g, b) {
+            const [rs, gs, bs] = [r, g, b].map(c => {
+                c = c / 255;
+                return c <= 0.03928 ? c / 12.92 : Math.pow((c + 0.055) / 1.055, 2.4);
+            });
+            
+            return 0.2126 * rs + 0.7152 * gs + 0.0722 * bs;
+        }
+
+        // Stopwatch & Timer Functions
+        let stopwatchInterval;
+        let stopwatchTime = 0;
+        let stopwatchRunning = false;
+        
+        function startStopwatch() {
+            if (stopwatchRunning) return;
+            
+            stopwatchRunning = true;
+            const startTime = Date.now() - stopwatchTime;
+            
+            stopwatchInterval = setInterval(() => {
+                stopwatchTime = Date.now() - startTime;
+                updateStopwatchDisplay();
+            }, 10);
+            
+            document.getElementById('stopwatchStart').disabled = true;
+            document.getElementById('stopwatchPause').disabled = false;
+        }
+        
+        function pauseStopwatch() {
+            if (!stopwatchRunning) return;
+            
+            clearInterval(stopwatchInterval);
+            stopwatchRunning = false;
+            
+            document.getElementById('stopwatchStart').disabled = false;
+            document.getElementById('stopwatchPause').disabled = true;
+        }
+        
+        function resetStopwatch() {
+            clearInterval(stopwatchInterval);
+            stopwatchTime = 0;
+            stopwatchRunning = false;
+            updateStopwatchDisplay();
+            
+            document.getElementById('stopwatchStart').disabled = false;
+            document.getElementById('stopwatchPause').disabled = true;
+        }
+        
+        function updateStopwatchDisplay() {
+            const milliseconds = Math.floor((stopwatchTime % 1000) / 10);
+            const seconds = Math.floor((stopwatchTime / 1000) % 60);
+            const minutes = Math.floor((stopwatchTime / (1000 * 60)) % 60);
+            const hours = Math.floor(stopwatchTime / (1000 * 60 * 60));
+            
+            document.getElementById('stopwatchDisplay').textContent = 
+                `${hours.toString().padStart(2, '0')}:${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}.${milliseconds.toString().padStart(2, '0')}`;
+        }
+        
+        let timerInterval;
+        let timerTime = 0;
+        let timerRunning = false;
+        
+        function startTimer() {
+            if (timerRunning) return;
+            
+            const minutes = parseInt(document.getElementById('timerMinutes').value) || 0;
+            const seconds = parseInt(document.getElementById('timerSeconds').value) || 0;
+            
+            if (minutes === 0 && seconds === 0) {
+                alert('Please set a time first');
+                return;
+            }
+            
+            timerTime = (minutes * 60 + seconds) * 1000;
+            
+            if (timerTime <= 0) return;
+            
+            timerRunning = true;
+            const startTime = Date.now();
+            const endTime = startTime + timerTime;
+            
+            timerInterval = setInterval(() => {
+                const remaining = endTime - Date.now();
+                
+                if (remaining <= 0) {
+                    clearInterval(timerInterval);
+                    timerRunning = false;
+                    document.getElementById('timerDisplay').textContent = '00:00';
+                    alert('Timer finished!');
+                    document.getElementById('timerStart').disabled = false;
+                    document.getElementById('timerPause').disabled = true;
+                    return;
+                }
+                
+                updateTimerDisplay(remaining);
+            }, 10);
+            
+            document.getElementById('timerStart').disabled = true;
+            document.getElementById('timerPause').disabled = false;
+        }
+        
+        function pauseTimer() {
+            if (!timerRunning) return;
+            
+            clearInterval(timerInterval);
+            timerRunning = false;
+            
+            document.getElementById('timerStart').disabled = false;
+            document.getElementById('timerPause').disabled = true;
+        }
+        
+        function resetTimer() {
+            clearInterval(timerInterval);
+            timerRunning = false;
+            
+            const minutes = parseInt(document.getElementById('timerMinutes').value) || 0;
+            const seconds = parseInt(document.getElementById('timerSeconds').value) || 0;
+            timerTime = (minutes * 60 + seconds) * 1000;
+            
+            updateTimerDisplay(timerTime);
+            
+            document.getElementById('timerStart').disabled = false;
+            document.getElementById('timerPause').disabled = true;
+        }
+        
+        function updateTimerDisplay(time) {
+            const seconds = Math.ceil(time / 1000);
+            const displayMinutes = Math.floor(seconds / 60);
+            const displaySeconds = seconds % 60;
+            
+            document.getElementById('timerDisplay').textContent = 
+                `${displayMinutes.toString().padStart(2, '0')}:${displaySeconds.toString().padStart(2, '0')}`;
+        }
+
+        // Quick Notes Functions
+        function initNotes() {
+            const notesInput = document.getElementById('notesInput');
+            
+            // Load saved notes
+            const savedNotes = localStorage.getItem('zqtools-notes');
+            if (savedNotes) {
+                notesInput.value = savedNotes;
+            }
+            
+            // Update character count
+            updateNotesCharCount();
+            
+            // Auto-save notes
+            notesInput.addEventListener('input', () => {
+                localStorage.setItem('zqtools-notes', notesInput.value);
+                updateNotesCharCount();
+                
+                // Show saving indicator
+                const saveStatus = document.getElementById('saveStatus');
+                saveStatus.textContent = 'saved';
+                
+                setTimeout(() => {
+                    saveStatus.textContent = 'real-time';
+                }, 2000);
+            });
+        }
+        
+        function saveNotes() {
+            const notesInput = document.getElementById('notesInput');
+            localStorage.setItem('zqtools-notes', notesInput.value);
+            
+            // Show feedback
+            const saveStatus = document.getElementById('saveStatus');
+            saveStatus.textContent = 'saved';
+            
+            setTimeout(() => {
+                saveStatus.textContent = 'real-time';
+            }, 2000);
+        }
+        
+        function clearNotes() {
+            if (confirm('Are you sure you want to clear all notes?')) {
+                document.getElementById('notesInput').value = '';
+                localStorage.removeItem('zqtools-notes');
+                updateNotesCharCount();
+            }
+        }
+        
+        function updateNotesCharCount() {
+            const notes = document.getElementById('notesInput').value;
+            document.getElementById('notesCharCount').textContent = notes.length;
+        }
+
+        // Initialize the application when DOM is loaded
+        document.addEventListener('DOMContentLoaded', init);
+    </script>
+</body>
+</html>
