@@ -3,25 +3,27 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>zqtools pack - Multi-Tool Website</title>
-    <meta name="description" content="A collection of useful web tools for developers and everyday use">
+    <title>zqtools pack - Premium Multi-Tool Website</title>
+    <meta name="description" content="A collection of advanced web tools for developers and professionals">
     <style>
-        /* CSS Variables for theming */
+        /* CSS Variables for Theming */
         :root {
             --bg-primary: #1E1E2F;
             --bg-secondary: #27293D;
             --bg-card: #2A2C42;
             --accent-primary: #4E73DF;
             --accent-secondary: #6C63FF;
+            --gradient: linear-gradient(135deg, var(--accent-primary), var(--accent-secondary));
             --text-primary: #FFFFFF;
             --text-secondary: #9DA5B1;
             --success: #1CC88A;
             --warning: #F6C23E;
             --danger: #E74A3B;
-            --border-radius: 12px;
+            --border-radius: 16px;
             --transition: all 0.3s ease;
-            --shadow: 0 4px 20px rgba(0, 0, 0, 0.25);
-            --card-padding: 1.5rem;
+            --shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+            --card-padding: 1.8rem;
+            --header-height: 70px;
         }
 
         /* Reset and Base Styles */
@@ -32,20 +34,23 @@
         }
 
         body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            font-family: 'Segoe UI', 'Inter', system-ui, -apple-system, sans-serif;
             background-color: var(--bg-primary);
             color: var(--text-primary);
             line-height: 1.6;
             overflow-x: hidden;
             min-height: 100vh;
+            background-image: 
+                radial-gradient(circle at 15% 50%, rgba(78, 115, 223, 0.1) 0%, transparent 25%),
+                radial-gradient(circle at 85% 30%, rgba(108, 99, 255, 0.1) 0%, transparent 25%);
         }
 
         /* Layout Components */
         .container {
             width: 100%;
-            max-width: 1200px;
+            max-width: 1300px;
             margin: 0 auto;
-            padding: 0 1.5rem;
+            padding: 0 1.8rem;
         }
 
         header {
@@ -55,24 +60,33 @@
             top: 0;
             z-index: 100;
             box-shadow: var(--shadow);
+            height: var(--header-height);
+            backdrop-filter: blur(10px);
+            background: rgba(39, 41, 61, 0.85);
         }
 
         .header-content {
             display: flex;
             justify-content: space-between;
             align-items: center;
+            height: 100%;
         }
 
         .logo {
-            font-size: 1.8rem;
-            font-weight: 700;
+            font-size: 2rem;
+            font-weight: 800;
             color: var(--text-primary);
             display: flex;
             align-items: center;
+            background: var(--gradient);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            transition: var(--transition);
         }
 
-        .logo span {
-            color: var(--accent-primary);
+        .logo:hover {
+            transform: scale(1.05);
         }
 
         /* Search and Filter */
@@ -80,40 +94,42 @@
             position: relative;
             width: 100%;
             max-width: 500px;
-            margin: 1.5rem auto;
+            margin: 2rem auto;
         }
 
         .search-box {
             width: 100%;
-            padding: 0.8rem 1rem 0.8rem 2.8rem;
+            padding: 1rem 1.2rem 1rem 3.2rem;
             border-radius: 50px;
             border: 2px solid var(--bg-secondary);
             background-color: var(--bg-secondary);
             color: var(--text-primary);
-            font-size: 1rem;
+            font-size: 1.1rem;
             transition: var(--transition);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
         }
 
         .search-box:focus {
             outline: none;
             border-color: var(--accent-primary);
-            box-shadow: 0 0 0 3px rgba(78, 115, 223, 0.3);
+            box-shadow: 0 0 0 4px rgba(78, 115, 223, 0.3);
         }
 
         .search-icon {
             position: absolute;
-            left: 1rem;
+            left: 1.2rem;
             top: 50%;
             transform: translateY(-50%);
             color: var(--text-secondary);
+            font-size: 1.2rem;
         }
 
         /* Tools Grid */
         .tools-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-            gap: 1.5rem;
-            padding: 1.5rem 0;
+            grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
+            gap: 2rem;
+            padding: 2rem 0;
         }
 
         .tool-card {
@@ -125,24 +141,54 @@
             height: 100%;
             display: flex;
             flex-direction: column;
+            position: relative;
+            overflow: hidden;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        .tool-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: var(--gradient);
+            opacity: 0;
+            transition: var(--transition);
         }
 
         .tool-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+            transform: translateY(-8px);
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.4);
+        }
+
+        .tool-card:hover::before {
+            opacity: 1;
         }
 
         .tool-header {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            margin-bottom: 1rem;
+            margin-bottom: 1.5rem;
         }
 
         .tool-title {
-            font-size: 1.2rem;
-            font-weight: 600;
+            font-size: 1.4rem;
+            font-weight: 700;
             color: var(--text-primary);
+        }
+
+        .tool-icon {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: var(--gradient);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.2rem;
         }
 
         .tool-content {
@@ -151,21 +197,22 @@
 
         /* Form Elements */
         .input-group {
-            margin-bottom: 1rem;
+            margin-bottom: 1.2rem;
         }
 
         .input-group label {
             display: block;
-            margin-bottom: 0.5rem;
+            margin-bottom: 0.6rem;
             color: var(--text-secondary);
             font-weight: 500;
+            font-size: 0.95rem;
         }
 
         input, select, textarea, button {
             width: 100%;
-            padding: 0.8rem 1rem;
-            border-radius: 8px;
-            border: 1px solid var(--bg-secondary);
+            padding: 1rem 1.2rem;
+            border-radius: 12px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
             background-color: var(--bg-secondary);
             color: var(--text-primary);
             font-size: 1rem;
@@ -179,26 +226,46 @@
         }
 
         textarea {
-            min-height: 120px;
+            min-height: 140px;
             resize: vertical;
+            font-family: 'Fira Code', monospace;
+            line-height: 1.5;
         }
 
         button {
-            background-color: var(--accent-primary);
+            background: var(--gradient);
             color: white;
             border: none;
             cursor: pointer;
             font-weight: 600;
-            padding: 0.8rem 1.5rem;
+            padding: 1rem 1.8rem;
             display: inline-flex;
             align-items: center;
             justify-content: center;
             transition: var(--transition);
+            border-radius: 12px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        button::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+            transition: 0.5s;
         }
 
         button:hover {
-            background-color: var(--accent-secondary);
-            transform: translateY(-2px);
+            transform: translateY(-3px);
+            box-shadow: 0 7px 15px rgba(78, 115, 223, 0.4);
+        }
+
+        button:hover::before {
+            left: 100%;
         }
 
         button:active {
@@ -206,42 +273,57 @@
         }
 
         .btn-sm {
-            padding: 0.5rem 1rem;
-            font-size: 0.9rem;
+            padding: 0.7rem 1.2rem;
+            font-size: 0.95rem;
         }
 
         .btn-icon {
-            margin-right: 0.5rem;
+            margin-right: 0.6rem;
         }
 
         /* Result Areas */
         .result {
-            margin-top: 1rem;
-            padding: 1rem;
+            margin-top: 1.2rem;
+            padding: 1.2rem;
             background-color: var(--bg-secondary);
-            border-radius: 8px;
+            border-radius: 12px;
             word-break: break-all;
-            min-height: 50px;
+            min-height: 60px;
+            font-family: 'Fira Code', monospace;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            position: relative;
+        }
+
+        .result::before {
+            content: 'Result';
+            position: absolute;
+            top: -10px;
+            left: 12px;
+            background: var(--bg-secondary);
+            padding: 0 8px;
+            font-size: 0.8rem;
+            color: var(--text-secondary);
         }
 
         /* Tabs */
         .tabs {
             display: flex;
-            margin-bottom: 1rem;
+            margin-bottom: 1.2rem;
             border-bottom: 1px solid var(--bg-secondary);
         }
 
         .tab {
-            padding: 0.5rem 1rem;
+            padding: 0.7rem 1.2rem;
             cursor: pointer;
             color: var(--text-secondary);
             transition: var(--transition);
-            border-bottom: 2px solid transparent;
+            border-bottom: 3px solid transparent;
+            font-weight: 500;
         }
 
         .tab.active {
             color: var(--accent-primary);
-            border-bottom: 2px solid var(--accent-primary);
+            border-bottom: 3px solid var(--accent-primary);
         }
 
         .tab-content {
@@ -254,7 +336,7 @@
 
         /* Range Input */
         input[type="range"] {
-            height: 5px;
+            height: 6px;
             -webkit-appearance: none;
             appearance: none;
             background: var(--bg-secondary);
@@ -266,19 +348,20 @@
         input[type="range"]::-webkit-slider-thumb {
             -webkit-appearance: none;
             appearance: none;
-            width: 18px;
-            height: 18px;
+            width: 20px;
+            height: 20px;
             border-radius: 50%;
             background: var(--accent-primary);
             cursor: pointer;
+            box-shadow: 0 0 10px rgba(78, 115, 223, 0.5);
         }
 
         /* Checkbox Group */
         .checkbox-group {
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(130px, 1fr));
-            gap: 0.5rem;
-            margin-bottom: 1rem;
+            grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+            gap: 0.7rem;
+            margin-bottom: 1.2rem;
         }
 
         .checkbox-item {
@@ -288,24 +371,30 @@
 
         .checkbox-item input {
             width: auto;
-            margin-right: 0.5rem;
+            margin-right: 0.6rem;
         }
 
         /* Color Preview */
         .color-preview {
             width: 100%;
-            height: 100px;
-            border-radius: 8px;
-            margin-bottom: 1rem;
+            height: 120px;
+            border-radius: 12px;
+            margin-bottom: 1.2rem;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+            border: 1px solid rgba(255, 255, 255, 0.1);
         }
 
         /* Timer Display */
         .timer-display {
-            font-size: 2.5rem;
+            font-size: 3rem;
             text-align: center;
             font-variant-numeric: tabular-nums;
-            margin: 1rem 0;
-            font-weight: 700;
+            margin: 1.5rem 0;
+            font-weight: 800;
+            background: var(--gradient);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
         }
 
         /* Command Palette */
@@ -315,58 +404,153 @@
             left: 0;
             width: 100%;
             height: 100%;
-            background-color: rgba(0, 0, 0, 0.8);
+            background-color: rgba(0, 0, 0, 0.85);
             display: none;
             justify-content: center;
             align-items: flex-start;
             z-index: 1000;
-            padding-top: 10%;
+            padding-top: 15%;
+            backdrop-filter: blur(5px);
         }
 
         .command-palette.active {
             display: flex;
+            animation: fadeIn 0.3s ease;
         }
 
         .command-box {
             width: 90%;
-            max-width: 600px;
+            max-width: 650px;
             background-color: var(--bg-card);
             border-radius: var(--border-radius);
-            padding: 1.5rem;
+            padding: 2rem;
             box-shadow: var(--shadow);
+            border: 1px solid rgba(255, 255, 255, 0.1);
         }
 
         .command-input {
             width: 100%;
-            padding: 1rem;
-            margin-bottom: 1rem;
-            border-radius: 8px;
+            padding: 1.2rem;
+            margin-bottom: 1.2rem;
+            border-radius: 12px;
             border: 2px solid var(--bg-secondary);
             background-color: var(--bg-secondary);
             color: var(--text-primary);
-            font-size: 1.2rem;
+            font-size: 1.3rem;
         }
 
         .command-list {
-            max-height: 300px;
+            max-height: 350px;
             overflow-y: auto;
         }
 
         .command-item {
-            padding: 0.8rem 1rem;
-            border-radius: 8px;
+            padding: 1rem 1.2rem;
+            border-radius: 12px;
             cursor: pointer;
             transition: var(--transition);
             display: flex;
             align-items: center;
+            margin-bottom: 0.5rem;
         }
 
         .command-item:hover {
             background-color: var(--bg-secondary);
+            transform: translateX(5px);
         }
 
         .command-item span {
-            margin-left: 0.5rem;
+            margin-left: 0.8rem;
+            font-weight: 500;
+        }
+
+        /* Toast Notifications */
+        .toast-container {
+            position: fixed;
+            bottom: 2rem;
+            right: 2rem;
+            z-index: 1000;
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+
+        .toast {
+            padding: 1rem 1.5rem;
+            border-radius: 12px;
+            background-color: var(--bg-card);
+            color: var(--text-primary);
+            box-shadow: var(--shadow);
+            display: flex;
+            align-items: center;
+            animation: slideIn 0.3s ease;
+            border-left: 4px solid var(--success);
+        }
+
+        .toast.error {
+            border-left-color: var(--danger);
+        }
+
+        .toast.warning {
+            border-left-color: var(--warning);
+        }
+
+        .toast-icon {
+            margin-right: 0.8rem;
+            font-size: 1.2rem;
+        }
+
+        /* Floating Action Button */
+        .fab {
+            position: fixed;
+            bottom: 2rem;
+            right: 2rem;
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            background: var(--gradient);
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            box-shadow: var(--shadow);
+            cursor: pointer;
+            z-index: 99;
+            transition: var(--transition);
+        }
+
+        .fab:hover {
+            transform: scale(1.1) rotate(90deg);
+        }
+
+        /* Tooltip */
+        .tooltip {
+            position: relative;
+        }
+
+        .tooltip::after {
+            content: attr(data-tooltip);
+            position: absolute;
+            bottom: 100%;
+            left: 50%;
+            transform: translateX(-50%);
+            padding: 0.5rem 1rem;
+            background-color: var(--bg-secondary);
+            color: var(--text-primary);
+            border-radius: 6px;
+            font-size: 0.85rem;
+            white-space: nowrap;
+            opacity: 0;
+            visibility: hidden;
+            transition: var(--transition);
+            z-index: 100;
+        }
+
+        .tooltip:hover::after {
+            opacity: 1;
+            visibility: visible;
+            bottom: calc(100% + 10px);
         }
 
         /* Utility Classes */
@@ -396,45 +580,101 @@
             text-align: center;
         }
 
-        /* Responsive Design */
-        @media (max-width: 768px) {
-            .tools-grid {
-                grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
-            }
+        .gradient-text {
+            background: var(--gradient);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+        }
 
+        /* Responsive Design */
+        @media (max-width: 1024px) {
+            .tools-grid {
+                grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            }
+        }
+
+        @media (max-width: 768px) {
             .header-content {
                 flex-direction: column;
-                gap: 1rem;
+                gap: 1.2rem;
+            }
+
+            .search-container {
+                margin: 1.5rem auto;
+            }
+
+            .tools-grid {
+                grid-template-columns: 1fr;
+                gap: 1.5rem;
             }
 
             .timer-display {
-                font-size: 2rem;
+                font-size: 2.5rem;
+            }
+
+            .command-palette {
+                padding-top: 25%;
             }
         }
 
         @media (max-width: 576px) {
-            .tools-grid {
-                grid-template-columns: 1fr;
+            .container {
+                padding: 0 1rem;
+            }
+
+            .tool-card {
+                padding: 1.5rem;
             }
 
             .checkbox-group {
                 grid-template-columns: 1fr 1fr;
             }
+
+            .timer-display {
+                font-size: 2rem;
+            }
+
+            .command-box {
+                width: 95%;
+                padding: 1.5rem;
+            }
         }
 
-        /* Animation */
+        /* Animations */
         @keyframes fadeIn {
             from { opacity: 0; }
             to { opacity: 1; }
         }
 
+        @keyframes slideIn {
+            from { 
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to { 
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+            100% { transform: scale(1); }
+        }
+
         .fade-in {
-            animation: fadeIn 0.3s ease;
+            animation: fadeIn 0.5s ease;
+        }
+
+        .pulse {
+            animation: pulse 2s infinite;
         }
 
         /* Scrollbar Styling */
         ::-webkit-scrollbar {
-            width: 8px;
+            width: 10px;
         }
 
         ::-webkit-scrollbar-track {
@@ -443,7 +683,7 @@
 
         ::-webkit-scrollbar-thumb {
             background: var(--accent-primary);
-            border-radius: 4px;
+            border-radius: 5px;
         }
 
         ::-webkit-scrollbar-thumb:hover {
@@ -455,7 +695,7 @@
     <!-- Header Section -->
     <header>
         <div class="container header-content">
-            <div class="logo">zq<span>tools</span> pack</div>
+            <div class="logo">zqtools pack</div>
             <div class="search-container">
                 <div class="search-icon">🔍</div>
                 <input type="text" id="searchInput" class="search-box" placeholder="Search for tools...">
@@ -470,6 +710,7 @@
             <div class="tool-card" data-tool-name="calculator">
                 <div class="tool-header">
                     <h3 class="tool-title">Calculator</h3>
+                    <div class="tool-icon">🧮</div>
                 </div>
                 <div class="tool-content">
                     <div class="input-group">
@@ -513,6 +754,7 @@
             <div class="tool-card" data-tool-name="unit converter">
                 <div class="tool-header">
                     <h3 class="tool-title">Unit Converter</h3>
+                    <div class="tool-icon">📏</div>
                 </div>
                 <div class="tool-content">
                     <div class="input-group">
@@ -520,45 +762,27 @@
                         <input type="number" id="converterValue" placeholder="Enter value">
                     </div>
                     <div class="input-group">
+                        <label for="converterCategory">Category</label>
+                        <select id="converterCategory">
+                            <option value="length">Length</option>
+                            <option value="temperature">Temperature</option>
+                            <option value="weight">Weight</option>
+                            <option value="area">Area</option>
+                            <option value="volume">Volume</option>
+                            <option value="time">Time</option>
+                            <option value="speed">Speed</option>
+                        </select>
+                    </div>
+                    <div class="input-group">
                         <label for="converterFrom">From</label>
                         <select id="converterFrom">
-                            <option value="meter">Meter</option>
-                            <option value="kilometer">Kilometer</option>
-                            <option value="centimeter">Centimeter</option>
-                            <option value="millimeter">Millimeter</option>
-                            <option value="mile">Mile</option>
-                            <option value="yard">Yard</option>
-                            <option value="foot">Foot</option>
-                            <option value="inch">Inch</option>
-                            <option value="celsius">Celsius</option>
-                            <option value="fahrenheit">Fahrenheit</option>
-                            <option value="kelvin">Kelvin</option>
-                            <option value="kilogram">Kilogram</option>
-                            <option value="gram">Gram</option>
-                            <option value="milligram">Milligram</option>
-                            <option value="pound">Pound</option>
-                            <option value="ounce">Ounce</option>
+                            <!-- Options will be populated by JavaScript -->
                         </select>
                     </div>
                     <div class="input-group">
                         <label for="converterTo">To</label>
                         <select id="converterTo">
-                            <option value="meter">Meter</option>
-                            <option value="kilometer">Kilometer</option>
-                            <option value="centimeter">Centimeter</option>
-                            <option value="millimeter">Millimeter</option>
-                            <option value="mile">Mile</option>
-                            <option value="yard">Yard</option>
-                            <option value="foot">Foot</option>
-                            <option value="inch">Inch</option>
-                            <option value="celsius">Celsius</option>
-                            <option value="fahrenheit">Fahrenheit</option>
-                            <option value="kelvin">Kelvin</option>
-                            <option value="kilogram">Kilogram</option>
-                            <option value="gram">Gram</option>
-                            <option value="milligram">Milligram</option>
-                            <option value="pound">Pound</option>
-                            <option value="ounce">Ounce</option>
+                            <!-- Options will be populated by JavaScript -->
                         </select>
                     </div>
                     <button onclick="convertUnits()">Convert</button>
@@ -570,6 +794,7 @@
             <div class="tool-card" data-tool-name="text utilities">
                 <div class="tool-header">
                     <h3 class="tool-title">Text Utilities</h3>
+                    <div class="tool-icon">📝</div>
                 </div>
                 <div class="tool-content">
                     <div class="input-group">
@@ -598,6 +823,7 @@
             <div class="tool-card" data-tool-name="base64 encode decode">
                 <div class="tool-header">
                     <h3 class="tool-title">Base64 Encode/Decode</h3>
+                    <div class="tool-icon">🔒</div>
                 </div>
                 <div class="tool-content">
                     <div class="tabs">
@@ -625,6 +851,7 @@
             <div class="tool-card" data-tool-name="url encode decode">
                 <div class="tool-header">
                     <h3 class="tool-title">URL Encoder/Decoder</h3>
+                    <div class="tool-icon">🌐</div>
                 </div>
                 <div class="tool-content">
                     <div class="tabs">
@@ -652,6 +879,7 @@
             <div class="tool-card" data-tool-name="json formatter validator">
                 <div class="tool-header">
                     <h3 class="tool-title">JSON Formatter</h3>
+                    <div class="tool-icon">{ }</div>
                 </div>
                 <div class="tool-content">
                     <div class="input-group">
@@ -666,6 +894,7 @@
             <div class="tool-card" data-tool-name="password generator">
                 <div class="tool-header">
                     <h3 class="tool-title">Password Generator</h3>
+                    <div class="tool-icon">🔑</div>
                 </div>
                 <div class="tool-content">
                     <div class="input-group">
@@ -700,8 +929,13 @@
             <div class="tool-card" data-tool-name="uuid generator">
                 <div class="tool-header">
                     <h3 class="tool-title">UUID Generator</h3>
+                    <div class="tool-icon">🆔</div>
                 </div>
                 <div class="tool-content">
+                    <div class="input-group">
+                        <label for="uuidCount">Number of UUIDs to generate</label>
+                        <input type="number" id="uuidCount" min="1" max="10" value="1">
+                    </div>
                     <button onclick="generateUUID()">Generate UUID v4</button>
                     <div class="result" id="uuidResult"></div>
                     <button onclick="copyUUID()" class="btn-sm mt-1">Copy UUID</button>
@@ -712,12 +946,22 @@
             <div class="tool-card" data-tool-name="hash generator">
                 <div class="tool-header">
                     <h3 class="tool-title">Hash Generator</h3>
+                    <div class="tool-icon">#️⃣</div>
                 </div>
                 <div class="tool-content">
                     <div class="input-group">
                         <textarea id="hashInput" placeholder="Text to hash"></textarea>
                     </div>
-                    <button onclick="generateHash()">Generate SHA-256 Hash</button>
+                    <div class="input-group">
+                        <label for="hashAlgorithm">Algorithm</label>
+                        <select id="hashAlgorithm">
+                            <option value="SHA-1">SHA-1</option>
+                            <option value="SHA-256" selected>SHA-256</option>
+                            <option value="SHA-384">SHA-384</option>
+                            <option value="SHA-512">SHA-512</option>
+                        </select>
+                    </div>
+                    <button onclick="generateHash()">Generate Hash</button>
                     <div class="result" id="hashResult"></div>
                 </div>
             </div>
@@ -726,6 +970,7 @@
             <div class="tool-card" data-tool-name="image resizer compressor">
                 <div class="tool-header">
                     <h3 class="tool-title">Image Resizer</h3>
+                    <div class="tool-icon">🖼️</div>
                 </div>
                 <div class="tool-content">
                     <div class="input-group">
@@ -755,6 +1000,7 @@
             <div class="tool-card" data-tool-name="color picker contrast checker">
                 <div class="tool-header">
                     <h3 class="tool-title">Color Picker</h3>
+                    <div class="tool-icon">🎨</div>
                 </div>
                 <div class="tool-content">
                     <div class="input-group">
@@ -783,6 +1029,7 @@
             <div class="tool-card" data-tool-name="stopwatch countdown timer">
                 <div class="tool-header">
                     <h3 class="tool-title">Stopwatch & Timer</h3>
+                    <div class="tool-icon">⏱️</div>
                 </div>
                 <div class="tool-content">
                     <div class="tabs">
@@ -795,6 +1042,10 @@
                             <button onclick="startStopwatch()" id="stopwatchStart" class="btn-sm">Start</button>
                             <button onclick="pauseStopwatch()" id="stopwatchPause" class="btn-sm" disabled>Pause</button>
                             <button onclick="resetStopwatch()" id="stopwatchReset" class="btn-sm">Reset</button>
+                        </div>
+                        <div class="input-group mt-1">
+                            <button onclick="addStopwatchLap()" id="stopwatchLap" class="btn-sm">Add Lap</button>
+                            <div id="stopwatchLaps" class="result mt-1"></div>
                         </div>
                     </div>
                     <div class="tab-content" id="timerTab">
@@ -820,6 +1071,7 @@
             <div class="tool-card" data-tool-name="quick notes">
                 <div class="tool-header">
                     <h3 class="tool-title">Quick Notes</h3>
+                    <div class="tool-icon">📒</div>
                 </div>
                 <div class="tool-content">
                     <div class="input-group">
@@ -828,6 +1080,7 @@
                     <div class="flex-between">
                         <button onclick="saveNotes()" class="btn-sm">Save Notes</button>
                         <button onclick="clearNotes()" class="btn-sm">Clear Notes</button>
+                        <button onclick="exportNotes()" class="btn-sm">Export</button>
                     </div>
                     <div class="input-group mt-1">
                         <div class="flex-between">
@@ -850,6 +1103,12 @@
         </div>
     </div>
 
+    <!-- Toast Container -->
+    <div class="toast-container" id="toastContainer"></div>
+
+    <!-- Floating Action Button -->
+    <div class="fab" onclick="openCommandPalette()">⌘K</div>
+
     <!-- Google Ads Placeholder -->
     <div class="container mt-1 mb-1 text-center">
         <div style="background-color: #2A2C42; padding: 20px; border-radius: var(--border-radius);">
@@ -859,6 +1118,8 @@
     </div>
 
     <script>
+        // Enhanced JavaScript with more advanced features
+
         // DOM Elements
         const searchInput = document.getElementById('searchInput');
         const toolsGrid = document.getElementById('toolsGrid');
@@ -867,23 +1128,84 @@
         const commandPalette = document.getElementById('commandPalette');
         const commandInput = document.getElementById('commandInput');
         const commandList = document.getElementById('commandList');
+        const toastContainer = document.getElementById('toastContainer');
         
-        // Tool data for command palette
+        // Enhanced tool data for command palette
         const tools = [
-            { name: 'Calculator', keywords: ['calc', 'calculator', 'math'] },
-            { name: 'Unit Converter', keywords: ['convert', 'converter', 'unit'] },
-            { name: 'Text Utilities', keywords: ['text', 'uppercase', 'lowercase', 'case'] },
-            { name: 'Base64 Encode/Decode', keywords: ['base64', 'encode', 'decode'] },
-            { name: 'URL Encoder/Decoder', keywords: ['url', 'encode', 'decode'] },
-            { name: 'JSON Formatter', keywords: ['json', 'format', 'validator'] },
-            { name: 'Password Generator', keywords: ['password', 'generate', 'security'] },
-            { name: 'UUID Generator', keywords: ['uuid', 'generate', 'unique'] },
-            { name: 'Hash Generator', keywords: ['hash', 'sha256', 'crypto'] },
-            { name: 'Image Resizer', keywords: ['image', 'resize', 'compress'] },
-            { name: 'Color Picker', keywords: ['color', 'picker', 'contrast'] },
-            { name: 'Stopwatch & Timer', keywords: ['stopwatch', 'timer', 'countdown'] },
-            { name: 'Quick Notes', keywords: ['notes', 'quick', 'save'] }
+            { name: 'Calculator', keywords: ['calc', 'calculator', 'math'], icon: '🧮' },
+            { name: 'Unit Converter', keywords: ['convert', 'converter', 'unit'], icon: '📏' },
+            { name: 'Text Utilities', keywords: ['text', 'uppercase', 'lowercase', 'case'], icon: '📝' },
+            { name: 'Base64 Encode/Decode', keywords: ['base64', 'encode', 'decode'], icon: '🔒' },
+            { name: 'URL Encoder/Decoder', keywords: ['url', 'encode', 'decode'], icon: '🌐' },
+            { name: 'JSON Formatter', keywords: ['json', 'format', 'validator'], icon: '{ }' },
+            { name: 'Password Generator', keywords: ['password', 'generate', 'security'], icon: '🔑' },
+            { name: 'UUID Generator', keywords: ['uuid', 'generate', 'unique'], icon: '🆔' },
+            { name: 'Hash Generator', keywords: ['hash', 'sha256', 'crypto'], icon: '#️⃣' },
+            { name: 'Image Resizer', keywords: ['image', 'resize', 'compress'], icon: '🖼️' },
+            { name: 'Color Picker', keywords: ['color', 'picker', 'contrast'], icon: '🎨' },
+            { name: 'Stopwatch & Timer', keywords: ['stopwatch', 'timer', 'countdown'], icon: '⏱️' },
+            { name: 'Quick Notes', keywords: ['notes', 'quick', 'save'], icon: '📒' }
         ];
+
+        // Unit conversion data
+        const unitCategories = {
+            length: {
+                meter: 1,
+                kilometer: 1000,
+                centimeter: 0.01,
+                millimeter: 0.001,
+                mile: 1609.34,
+                yard: 0.9144,
+                foot: 0.3048,
+                inch: 0.0254
+            },
+            temperature: {
+                celsius: 1,
+                fahrenheit: 1, // Special handling
+                kelvin: 1
+            },
+            weight: {
+                kilogram: 1,
+                gram: 0.001,
+                milligram: 0.000001,
+                pound: 0.453592,
+                ounce: 0.0283495
+            },
+            area: {
+                'square meter': 1,
+                'square kilometer': 1000000,
+                hectare: 10000,
+                acre: 4046.86,
+                'square mile': 2589988.11,
+                'square foot': 0.092903,
+                'square inch': 0.00064516
+            },
+            volume: {
+                'cubic meter': 1,
+                liter: 0.001,
+                milliliter: 0.000001,
+                gallon: 0.00378541,
+                quart: 0.000946353,
+                pint: 0.000473176,
+                cup: 0.000236588
+            },
+            time: {
+                second: 1,
+                minute: 60,
+                hour: 3600,
+                day: 86400,
+                week: 604800,
+                month: 2629746, // Average month in seconds
+                year: 31556952 // Average year in seconds
+            },
+            speed: {
+                'm/s': 1,
+                'km/h': 0.277778,
+                'mph': 0.44704,
+                knot: 0.514444,
+                'ft/s': 0.3048
+            }
+        };
 
         // Initialize the application
         function init() {
@@ -925,6 +1247,7 @@
             initImageTool();
             initColorPicker();
             initNotes();
+            initUnitConverter();
             
             // Close command palette when clicking outside
             commandPalette.addEventListener('click', (e) => {
@@ -932,21 +1255,47 @@
                     closeCommandPalette();
                 }
             });
+            
+            // Show welcome message
+            setTimeout(() => {
+                showToast('Welcome to zqtools pack! Press Ctrl+K to open command palette', 'success');
+            }, 1000);
         }
 
         // Search and filter tools
         function filterTools() {
             const searchTerm = searchInput.value.toLowerCase();
             
+            if (searchTerm === '') {
+                toolCards.forEach(card => {
+                    card.style.display = 'block';
+                    card.classList.add('fade-in');
+                });
+                return;
+            }
+            
+            let found = false;
+            
             toolCards.forEach(card => {
                 const toolName = card.getAttribute('data-tool-name').toLowerCase();
                 
                 if (toolName.includes(searchTerm)) {
                     card.style.display = 'block';
+                    card.classList.add('fade-in');
+                    found = true;
                 } else {
                     card.style.display = 'none';
                 }
             });
+            
+            if (!found) {
+                toolsGrid.innerHTML = `
+                    <div class="no-results" style="grid-column: 1 / -1; text-align: center; padding: 3rem;">
+                        <h2 style="margin-bottom: 1rem;">No tools found</h2>
+                        <p>Try searching for something else or use the command palette (Ctrl+K)</p>
+                    </div>
+                `;
+            }
         }
 
         // Command palette functionality
@@ -967,7 +1316,7 @@
             tools.forEach(tool => {
                 const item = document.createElement('div');
                 item.className = 'command-item';
-                item.innerHTML = `🔧 <span>${tool.name}</span>`;
+                item.innerHTML = `${tool.icon} <span>${tool.name}</span>`;
                 item.addEventListener('click', () => {
                     navigateToTool(tool.name);
                     closeCommandPalette();
@@ -994,7 +1343,6 @@
 
         function navigateToTool(toolName) {
             // Scroll to the tool
-            const normalizedName = toolName.toLowerCase().replace(/\s+/g, '-');
             const toolElement = document.querySelector(`[data-tool-name="${toolName.toLowerCase()}"]`);
             
             if (toolElement) {
@@ -1012,47 +1360,65 @@
             filterTools();
         }
 
-        // Calculator Functions
-        let calcExpression = '';
-        
-        function calcAppend(value) {
-            calcExpression += value;
-            updateCalcDisplay();
-        }
-        
-        function calcClear() {
-            calcExpression = '';
-            updateCalcDisplay();
-        }
-        
-        function calcBackspace() {
-            calcExpression = calcExpression.slice(0, -1);
-            updateCalcDisplay();
-        }
-        
-        function calculate() {
-            try {
-                // Replace × with * for evaluation
-                const expression = calcExpression.replace(/×/g, '*');
-                calcExpression = eval(expression).toString();
-                updateCalcDisplay();
-            } catch (error) {
-                calcExpression = 'Error';
-                updateCalcDisplay();
-                setTimeout(() => {
-                    calcExpression = '';
-                    updateCalcDisplay();
-                }, 1500);
-            }
-        }
-        
-        function updateCalcDisplay() {
-            document.getElementById('calcDisplay').value = calcExpression;
+        // Toast notification system
+        function showToast(message, type = 'success') {
+            const toast = document.createElement('div');
+            toast.className = `toast ${type}`;
+            toast.innerHTML = `
+                <span class="toast-icon">${type === 'success' ? '✅' : type === 'error' ? '❌' : '⚠️'}</span>
+                <span>${message}</span>
+            `;
+            
+            toastContainer.appendChild(toast);
+            
+            // Remove toast after 3 seconds
+            setTimeout(() => {
+                toast.remove();
+            }, 3000);
         }
 
         // Unit Converter Functions
+        function initUnitConverter() {
+            const categorySelect = document.getElementById('converterCategory');
+            const fromSelect = document.getElementById('converterFrom');
+            const toSelect = document.getElementById('converterTo');
+            
+            // Populate category options
+            for (const category in unitCategories) {
+                categorySelect.innerHTML += `<option value="${category}">${category.charAt(0).toUpperCase() + category.slice(1)}</option>`;
+            }
+            
+            // Update unit options when category changes
+            categorySelect.addEventListener('change', updateUnitOptions);
+            
+            // Initialize unit options
+            updateUnitOptions();
+        }
+        
+        function updateUnitOptions() {
+            const category = document.getElementById('converterCategory').value;
+            const fromSelect = document.getElementById('converterFrom');
+            const toSelect = document.getElementById('converterTo');
+            
+            // Clear existing options
+            fromSelect.innerHTML = '';
+            toSelect.innerHTML = '';
+            
+            // Add new options based on category
+            for (const unit in unitCategories[category]) {
+                fromSelect.innerHTML += `<option value="${unit}">${unit}</option>`;
+                toSelect.innerHTML += `<option value="${unit}">${unit}</option>`;
+            }
+            
+            // Set default "to" unit to something different from "from"
+            if (toSelect.options.length > 1) {
+                toSelect.selectedIndex = 1;
+            }
+        }
+        
         function convertUnits() {
             const value = parseFloat(document.getElementById('converterValue').value);
+            const category = document.getElementById('converterCategory').value;
             const fromUnit = document.getElementById('converterFrom').value;
             const toUnit = document.getElementById('converterTo').value;
             
@@ -1061,93 +1427,45 @@
                 return;
             }
             
-            // Convert to base unit (meters for length, celsius for temperature, kilograms for weight)
-            let baseValue;
+            let result;
             
-            // Length conversions
-            if (['meter', 'kilometer', 'centimeter', 'millimeter', 'mile', 'yard', 'foot', 'inch'].includes(fromUnit)) {
-                baseValue = convertToMeters(value, fromUnit);
-                const result = convertFromMeters(baseValue, toUnit);
-                document.getElementById('converterResult').textContent = `${value} ${fromUnit} = ${result.toFixed(6)} ${toUnit}`;
+            // Special handling for temperature
+            if (category === 'temperature') {
+                result = convertTemperature(value, fromUnit, toUnit);
+            } else {
+                // Convert to base unit first
+                const baseValue = value * unitCategories[category][fromUnit];
+                // Convert from base unit to target unit
+                result = baseValue / unitCategories[category][toUnit];
             }
-            // Temperature conversions
-            else if (['celsius', 'fahrenheit', 'kelvin'].includes(fromUnit)) {
-                baseValue = convertToCelsius(value, fromUnit);
-                const result = convertFromCelsius(baseValue, toUnit);
-                document.getElementById('converterResult').textContent = `${value} ${fromUnit} = ${result.toFixed(2)} ${toUnit}`;
+            
+            document.getElementById('converterResult').textContent = `${value} ${fromUnit} = ${result.toFixed(6)} ${toUnit}`;
+        }
+        
+        function convertTemperature(value, fromUnit, toUnit) {
+            // Convert to Celsius first
+            let celsius;
+            switch (fromUnit) {
+                case 'celsius':
+                    celsius = value;
+                    break;
+                case 'fahrenheit':
+                    celsius = (value - 32) * 5/9;
+                    break;
+                case 'kelvin':
+                    celsius = value - 273.15;
+                    break;
             }
-            // Weight conversions
-            else if (['kilogram', 'gram', 'milligram', 'pound', 'ounce'].includes(fromUnit)) {
-                baseValue = convertToKilograms(value, fromUnit);
-                const result = convertFromKilograms(baseValue, toUnit);
-                document.getElementById('converterResult').textContent = `${value} ${fromUnit} = ${result.toFixed(6)} ${toUnit}`;
+            
+            // Convert from Celsius to target unit
+            switch (toUnit) {
+                case 'celsius':
+                    return celsius;
+                case 'fahrenheit':
+                    return (celsius * 9/5) + 32;
+                case 'kelvin':
+                    return celsius + 273.15;
             }
-        }
-        
-        function convertToMeters(value, unit) {
-            const conversionFactors = {
-                meter: 1,
-                kilometer: 1000,
-                centimeter: 0.01,
-                millimeter: 0.001,
-                mile: 1609.34,
-                yard: 0.9144,
-                foot: 0.3048,
-                inch: 0.0254
-            };
-            
-            return value * conversionFactors[unit];
-        }
-        
-        function convertFromMeters(value, unit) {
-            const conversionFactors = {
-                meter: 1,
-                kilometer: 0.001,
-                centimeter: 100,
-                millimeter: 1000,
-                mile: 0.000621371,
-                yard: 1.09361,
-                foot: 3.28084,
-                inch: 39.3701
-            };
-            
-            return value * conversionFactors[unit];
-        }
-        
-        function convertToCelsius(value, unit) {
-            if (unit === 'celsius') return value;
-            if (unit === 'fahrenheit') return (value - 32) * 5/9;
-            if (unit === 'kelvin') return value - 273.15;
-        }
-        
-        function convertFromCelsius(value, unit) {
-            if (unit === 'celsius') return value;
-            if (unit === 'fahrenheit') return (value * 9/5) + 32;
-            if (unit === 'kelvin') return value + 273.15;
-        }
-        
-        function convertToKilograms(value, unit) {
-            const conversionFactors = {
-                kilogram: 1,
-                gram: 0.001,
-                milligram: 0.000001,
-                pound: 0.453592,
-                ounce: 0.0283495
-            };
-            
-            return value * conversionFactors[unit];
-        }
-        
-        function convertFromKilograms(value, unit) {
-            const conversionFactors = {
-                kilogram: 1,
-                gram: 1000,
-                milligram: 1000000,
-                pound: 2.20462,
-                ounce: 35.274
-            };
-            
-            return value * conversionFactors[unit];
         }
 
         // Text Utilities Functions
@@ -1194,12 +1512,7 @@
             textInput.select();
             document.execCommand('copy');
             
-            // Show feedback
-            const originalText = textInput.value;
-            textInput.value = 'Copied to clipboard!';
-            setTimeout(() => {
-                textInput.value = originalText;
-            }, 1500);
+            showToast('Text copied to clipboard!', 'success');
         }
         
         function textClear() {
@@ -1227,6 +1540,7 @@
                 document.getElementById('base64DecodeResult').textContent = decoded;
             } catch (error) {
                 document.getElementById('base64DecodeResult').textContent = 'Invalid Base64 string';
+                showToast('Invalid Base64 string', 'error');
             }
         }
 
@@ -1244,6 +1558,7 @@
                 document.getElementById('urlDecodeResult').textContent = decoded;
             } catch (error) {
                 document.getElementById('urlDecodeResult').textContent = 'Invalid encoded URL';
+                showToast('Invalid encoded URL', 'error');
             }
         }
 
@@ -1256,9 +1571,11 @@
                 const formatted = JSON.stringify(parsed, null, 2);
                 document.getElementById('jsonResult').textContent = formatted;
                 document.getElementById('jsonResult').style.color = 'var(--text-primary)';
+                showToast('JSON formatted successfully!', 'success');
             } catch (error) {
                 document.getElementById('jsonResult').textContent = 'Invalid JSON: ' + error.message;
                 document.getElementById('jsonResult').style.color = 'var(--danger)';
+                showToast('Invalid JSON: ' + error.message, 'error');
             }
         }
 
@@ -1283,12 +1600,16 @@
             
             if (characters === '') {
                 document.getElementById('passwordResult').textContent = 'Please select at least one character type';
+                showToast('Please select at least one character type', 'error');
                 return;
             }
             
             let password = '';
+            const array = new Uint32Array(length);
+            window.crypto.getRandomValues(array);
+            
             for (let i = 0; i < length; i++) {
-                password += characters.charAt(Math.floor(Math.random() * characters.length));
+                password += characters[array[i] % characters.length];
             }
             
             document.getElementById('passwordResult').textContent = password;
@@ -1298,11 +1619,7 @@
             const password = document.getElementById('passwordResult').textContent;
             if (password && password !== 'Password will appear here') {
                 navigator.clipboard.writeText(password).then(() => {
-                    const originalText = document.getElementById('passwordResult').textContent;
-                    document.getElementById('passwordResult').textContent = 'Copied to clipboard!';
-                    setTimeout(() => {
-                        document.getElementById('passwordResult').textContent = originalText;
-                    }, 1500);
+                    showToast('Password copied to clipboard!', 'success');
                 });
             }
         }
@@ -1314,25 +1631,28 @@
 
         // UUID Generator Functions
         function generateUUID() {
-            // Generate a UUID v4 (random)
-            const uuid = 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function(c) {
-                const r = Math.random() * 16 | 0;
-                const v = c === 'x' ? r : (r & 0x3 | 0x8);
-                return v.toString(16);
-            });
+            const count = parseInt(document.getElementById('uuidCount').value) || 1;
+            let uuids = '';
             
-            document.getElementById('uuidResult').textContent = uuid;
+            for (let i = 0; i < count; i++) {
+                // Generate a UUID v4 (random)
+                const uuid = 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function(c) {
+                    const r = Math.random() * 16 | 0;
+                    const v = c === 'x' ? r : (r & 0x3 | 0x8);
+                    return v.toString(16);
+                });
+                
+                uuids += uuid + (i < count - 1 ? '\n' : '');
+            }
+            
+            document.getElementById('uuidResult').textContent = uuids;
         }
         
         function copyUUID() {
             const uuid = document.getElementById('uuidResult').textContent;
             if (uuid) {
                 navigator.clipboard.writeText(uuid).then(() => {
-                    const originalText = document.getElementById('uuidResult').textContent;
-                    document.getElementById('uuidResult').textContent = 'Copied to clipboard!';
-                    setTimeout(() => {
-                        document.getElementById('uuidResult').textContent = originalText;
-                    }, 1500);
+                    showToast('UUID copied to clipboard!', 'success');
                 });
             }
         }
@@ -1340,9 +1660,11 @@
         // Hash Generator Functions
         async function generateHash() {
             const input = document.getElementById('hashInput').value;
+            const algorithm = document.getElementById('hashAlgorithm').value;
             
             if (!input) {
                 document.getElementById('hashResult').textContent = 'Please enter text to hash';
+                showToast('Please enter text to hash', 'error');
                 return;
             }
             
@@ -1350,14 +1672,19 @@
             const encoder = new TextEncoder();
             const data = encoder.encode(input);
             
-            // Generate the hash using Web Crypto API
-            const hashBuffer = await crypto.subtle.digest('SHA-256', data);
-            
-            // Convert the hash to a hexadecimal string
-            const hashArray = Array.from(new Uint8Array(hashBuffer));
-            const hashHex = hashArray.map(b => b.toString(16).padStart(2, '0')).join('');
-            
-            document.getElementById('hashResult').textContent = hashHex;
+            try {
+                // Generate the hash using Web Crypto API
+                const hashBuffer = await crypto.subtle.digest(algorithm, data);
+                
+                // Convert the hash to a hexadecimal string
+                const hashArray = Array.from(new Uint8Array(hashBuffer));
+                const hashHex = hashArray.map(b => b.toString(16).padStart(2, '0')).join('');
+                
+                document.getElementById('hashResult').textContent = hashHex;
+            } catch (error) {
+                document.getElementById('hashResult').textContent = 'Error generating hash';
+                showToast('Error generating hash', 'error');
+            }
         }
 
         // Image Tool Functions
@@ -1399,7 +1726,7 @@
             const quality = parseInt(document.getElementById('imageQuality').value) / 100;
             
             if (!file) {
-                alert('Please select an image first');
+                showToast('Please select an image first', 'error');
                 return;
             }
             
@@ -1421,13 +1748,6 @@
                     // Get the data URL
                     const dataURL = canvas.toDataURL('image/jpeg', quality);
                     
-                    // Create download link
-                    const downloadLink = document.getElementById('downloadLink');
-                    downloadLink.href = dataURL;
-                    downloadLink.download = 'resized-image.jpg';
-                    downloadLink.textContent = 'Download Resized Image';
-                    downloadLink.classList.remove('hidden');
-                    
                     // Calculate size reduction
                     const originalSize = file.size;
                     const newSize = Math.round((dataURL.length * 3) / 4); // Approximate base64 size
@@ -1436,8 +1756,10 @@
                     document.getElementById('imageResult').innerHTML = `
                         <p>Original: ${formatBytes(originalSize)}</p>
                         <p>New: ${formatBytes(newSize)} (${reduction > 0 ? reduction + '% smaller' : 'larger due to format change'})</p>
-                        <a href="${dataURL}" download="resized-image.jpg" style="display: block; margin-top: 10px;">Download Resized Image</a>
+                        <a href="${dataURL}" download="resized-image.jpg" class="btn-sm" style="display: inline-block; margin-top: 10px;">Download Resized Image</a>
                     `;
+                    
+                    showToast('Image processed successfully!', 'success');
                 };
                 img.src = e.target.result;
             };
@@ -1539,6 +1861,7 @@
         let stopwatchInterval;
         let stopwatchTime = 0;
         let stopwatchRunning = false;
+        let stopwatchLaps = [];
         
         function startStopwatch() {
             if (stopwatchRunning) return;
@@ -1569,20 +1892,36 @@
             clearInterval(stopwatchInterval);
             stopwatchTime = 0;
             stopwatchRunning = false;
+            stopwatchLaps = [];
             updateStopwatchDisplay();
+            document.getElementById('stopwatchLaps').innerHTML = '';
             
             document.getElementById('stopwatchStart').disabled = false;
             document.getElementById('stopwatchPause').disabled = true;
         }
         
-        function updateStopwatchDisplay() {
-            const milliseconds = Math.floor((stopwatchTime % 1000) / 10);
-            const seconds = Math.floor((stopwatchTime / 1000) % 60);
-            const minutes = Math.floor((stopwatchTime / (1000 * 60)) % 60);
-            const hours = Math.floor(stopwatchTime / (1000 * 60 * 60));
+        function addStopwatchLap() {
+            if (!stopwatchRunning) return;
             
-            document.getElementById('stopwatchDisplay').textContent = 
-                `${hours.toString().padStart(2, '0')}:${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}.${milliseconds.toString().padStart(2, '0')}`;
+            const lapTime = stopwatchTime;
+            stopwatchLaps.push(lapTime);
+            
+            const lapItem = document.createElement('div');
+            lapItem.textContent = `Lap ${stopwatchLaps.length}: ${formatTime(lapTime)}`;
+            document.getElementById('stopwatchLaps').appendChild(lapItem);
+        }
+        
+        function updateStopwatchDisplay() {
+            document.getElementById('stopwatchDisplay').textContent = formatTime(stopwatchTime);
+        }
+        
+        function formatTime(time) {
+            const milliseconds = Math.floor((time % 1000) / 10);
+            const seconds = Math.floor((time / 1000) % 60);
+            const minutes = Math.floor((time / (1000 * 60)) % 60);
+            const hours = Math.floor(time / (1000 * 60 * 60));
+            
+            return `${hours.toString().padStart(2, '0')}:${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}.${milliseconds.toString().padStart(2, '0')}`;
         }
         
         let timerInterval;
@@ -1596,7 +1935,7 @@
             const seconds = parseInt(document.getElementById('timerSeconds').value) || 0;
             
             if (minutes === 0 && seconds === 0) {
-                alert('Please set a time first');
+                showToast('Please set a time first', 'error');
                 return;
             }
             
@@ -1615,7 +1954,7 @@
                     clearInterval(timerInterval);
                     timerRunning = false;
                     document.getElementById('timerDisplay').textContent = '00:00';
-                    alert('Timer finished!');
+                    showToast('Timer finished!', 'success');
                     document.getElementById('timerStart').disabled = false;
                     document.getElementById('timerPause').disabled = true;
                     return;
@@ -1694,6 +2033,8 @@
             localStorage.setItem('zqtools-notes', notesInput.value);
             
             // Show feedback
+            showToast('Notes saved successfully!', 'success');
+            
             const saveStatus = document.getElementById('saveStatus');
             saveStatus.textContent = 'saved';
             
@@ -1707,12 +2048,63 @@
                 document.getElementById('notesInput').value = '';
                 localStorage.removeItem('zqtools-notes');
                 updateNotesCharCount();
+                showToast('Notes cleared', 'success');
             }
+        }
+        
+        function exportNotes() {
+            const notes = document.getElementById('notesInput').value;
+            const blob = new Blob([notes], { type: 'text/plain' });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = 'zqtools-notes.txt';
+            a.click();
+            URL.revokeObjectURL(url);
+            showToast('Notes exported successfully!', 'success');
         }
         
         function updateNotesCharCount() {
             const notes = document.getElementById('notesInput').value;
             document.getElementById('notesCharCount').textContent = notes.length;
+        }
+
+        // Calculator Functions
+        let calcExpression = '';
+        
+        function calcAppend(value) {
+            calcExpression += value;
+            updateCalcDisplay();
+        }
+        
+        function calcClear() {
+            calcExpression = '';
+            updateCalcDisplay();
+        }
+        
+        function calcBackspace() {
+            calcExpression = calcExpression.slice(0, -1);
+            updateCalcDisplay();
+        }
+        
+        function calculate() {
+            try {
+                // Replace × with * for evaluation
+                const expression = calcExpression.replace(/×/g, '*');
+                calcExpression = eval(expression).toString();
+                updateCalcDisplay();
+            } catch (error) {
+                calcExpression = 'Error';
+                updateCalcDisplay();
+                setTimeout(() => {
+                    calcExpression = '';
+                    updateCalcDisplay();
+                }, 1500);
+            }
+        }
+        
+        function updateCalcDisplay() {
+            document.getElementById('calcDisplay').value = calcExpression;
         }
 
         // Initialize the application when DOM is loaded
